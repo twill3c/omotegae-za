@@ -1,0 +1,902 @@
+[
+ {
+  "id": "tlg0085.tlg001",
+  "ja": "嘆願する女たち",
+  "grc": "Ἱκέτιδες",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1079,
+  "sp": 236,
+  "chi": {
+   "A_strict": 2,
+   "A_loose": 2,
+   "B_strict": 2,
+   "B_loose": 2
+  },
+  "vertices": 5,
+  "scenes": {
+   "strict": 9,
+   "loose": 74
+  }
+ },
+ {
+  "id": "tlg0085.tlg002",
+  "ja": "ペルシア人",
+  "grc": "Πέρσαι",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1065,
+  "sp": 212,
+  "chi": {
+   "A_strict": 2,
+   "A_loose": 2,
+   "B_strict": 2,
+   "B_loose": 2
+  },
+  "vertices": 5,
+  "scenes": {
+   "strict": 7,
+   "loose": 65
+  }
+ },
+ {
+  "id": "tlg0085.tlg003",
+  "ja": "縛られたプロメテウス",
+  "grc": "Προμηθεὺς δεσμώτης",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1097,
+  "sp": 219,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 6,
+  "scenes": {
+   "strict": 10,
+   "loose": 37
+  }
+ },
+ {
+  "id": "tlg0085.tlg004",
+  "ja": "テーバイ攻めの七将",
+  "grc": "Ἑπτὰ ἐπὶ Θήβας",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1072,
+  "sp": 191,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 5,
+  "scenes": {
+   "strict": 6,
+   "loose": 42
+  }
+ },
+ {
+  "id": "tlg0085.tlg005",
+  "ja": "アガメムノン",
+  "grc": "Ἀγαμέμνων",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1649,
+  "sp": 236,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 2,
+   "B_strict": 3,
+   "B_loose": 2
+  },
+  "vertices": 6,
+  "scenes": {
+   "strict": 12,
+   "loose": 88
+  }
+ },
+ {
+  "id": "tlg0085.tlg006",
+  "ja": "供養する女たち",
+  "grc": "Χοηφóρoι",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1078,
+  "sp": 227,
+  "chi": {
+   "A_strict": 5,
+   "A_loose": 4,
+   "B_strict": 5,
+   "B_loose": 4
+  },
+  "vertices": 7,
+  "scenes": {
+   "strict": 17,
+   "loose": 61
+  }
+ },
+ {
+  "id": "tlg0085.tlg007",
+  "ja": "エウメニデス",
+  "grc": "Εὐμενίδες",
+  "author": "アイスキュロス",
+  "genre": "悲劇",
+  "lines": 1041,
+  "sp": 188,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 4,
+   "B_strict": 4,
+   "B_loose": 4
+  },
+  "vertices": 6,
+  "scenes": {
+   "strict": 10,
+   "loose": 70
+  }
+ },
+ {
+  "id": "tlg0011.tlg001",
+  "ja": "トラキスの女たち",
+  "grc": "Τραχίνιαι",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1242,
+  "sp": 273,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 6,
+   "loose": 34
+  }
+ },
+ {
+  "id": "tlg0011.tlg002",
+  "ja": "アンティゴネ",
+  "grc": "Ἀντιγόνη",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1257,
+  "sp": 299,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 9,
+  "scenes": {
+   "strict": 12,
+   "loose": 46
+  }
+ },
+ {
+  "id": "tlg0011.tlg003",
+  "ja": "アイアス",
+  "grc": "Αἴας",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1376,
+  "sp": 310,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 9,
+   "loose": 62
+  }
+ },
+ {
+  "id": "tlg0011.tlg004",
+  "ja": "オイディプス王",
+  "grc": "Οἰδίπους Τύραννος",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1482,
+  "sp": 458,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 6,
+   "loose": 46
+  }
+ },
+ {
+  "id": "tlg0011.tlg005",
+  "ja": "エレクトラ",
+  "grc": "Ἠλέκτρα",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1487,
+  "sp": 421,
+  "chi": {
+   "A_strict": 5,
+   "A_loose": 3,
+   "B_strict": 5,
+   "B_loose": 3
+  },
+  "vertices": 6,
+  "scenes": {
+   "strict": 4,
+   "loose": 53
+  }
+ },
+ {
+  "id": "tlg0011.tlg006",
+  "ja": "ピロクテテス",
+  "grc": "Φιλοκτήτης",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1465,
+  "sp": 414,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 4,
+   "B_strict": 4,
+   "B_loose": 4
+  },
+  "vertices": 5,
+  "scenes": {
+   "strict": 9,
+   "loose": 35
+  }
+ },
+ {
+  "id": "tlg0011.tlg007",
+  "ja": "コロノスのオイディプス",
+  "grc": "Οἰδίπους ἐπὶ Κολωνῷ",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 1815,
+  "sp": 546,
+  "chi": {
+   "A_strict": 5,
+   "A_loose": 4,
+   "B_strict": 5,
+   "B_loose": 4
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 6,
+   "loose": 111
+  }
+ },
+ {
+  "id": "tlg0011.tlg008",
+  "ja": "追跡者たち(断片)",
+  "grc": "Ichneutae",
+  "author": "ソポクレス",
+  "genre": "悲劇",
+  "lines": 405,
+  "sp": 97,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 2,
+   "B_strict": 3,
+   "B_loose": 2
+  },
+  "vertices": 3,
+  "scenes": {
+   "strict": 1,
+   "loose": 37
+  }
+ },
+ {
+  "id": "tlg0006.tlg001",
+  "ja": "キュクロプス",
+  "grc": "Κύκλωψ",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 747,
+  "sp": 256,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 3,
+  "scenes": {
+   "strict": 5,
+   "loose": 46
+  }
+ },
+ {
+  "id": "tlg0006.tlg002",
+  "ja": "アルケスティス",
+  "grc": "Ἄλκηστις",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1175,
+  "sp": 323,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 9,
+  "scenes": {
+   "strict": 7,
+   "loose": 46
+  }
+ },
+ {
+  "id": "tlg0006.tlg003",
+  "ja": "メデイア",
+  "grc": "Μήδεια",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1408,
+  "sp": 250,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 11,
+   "loose": 28
+  }
+ },
+ {
+  "id": "tlg0006.tlg004",
+  "ja": "ヘラクレスの子ら",
+  "grc": "Ἡρακλεῖδαι",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1073,
+  "sp": 212,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 7,
+  "scenes": {
+   "strict": 6,
+   "loose": 38
+  }
+ },
+ {
+  "id": "tlg0006.tlg005",
+  "ja": "ヒッポリュトス",
+  "grc": "Ἱππόλυτος",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1459,
+  "sp": 299,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 9,
+   "loose": 49
+  }
+ },
+ {
+  "id": "tlg0006.tlg006",
+  "ja": "アンドロマケ",
+  "grc": "Ἀνδρομάχη",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1288,
+  "sp": 213,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 10,
+  "scenes": {
+   "strict": 7,
+   "loose": 34
+  }
+ },
+ {
+  "id": "tlg0006.tlg007",
+  "ja": "ヘカベ",
+  "grc": "Ἑκάβη",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1279,
+  "sp": 262,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 5,
+   "loose": 27
+  }
+ },
+ {
+  "id": "tlg0006.tlg008",
+  "ja": "嘆願する女たち",
+  "grc": "Ἱκέτιδες",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1254,
+  "sp": 254,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 9,
+  "scenes": {
+   "strict": 9,
+   "loose": 43
+  }
+ },
+ {
+  "id": "tlg0006.tlg009",
+  "ja": "ヘラクレス",
+  "grc": "Ἡρακλῆς",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1453,
+  "sp": 299,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 23,
+   "loose": 37
+  }
+ },
+ {
+  "id": "tlg0006.tlg010",
+  "ja": "イオン",
+  "grc": "Ἴων",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1691,
+  "sp": 561,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 6,
+   "loose": 40
+  }
+ },
+ {
+  "id": "tlg0006.tlg011",
+  "ja": "トロイアの女たち",
+  "grc": "Τρῳάδες",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1353,
+  "sp": 229,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 5,
+   "loose": 41
+  }
+ },
+ {
+  "id": "tlg0006.tlg012",
+  "ja": "エレクトラ",
+  "grc": "Ἠλέκτρα",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1374,
+  "sp": 372,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 7,
+  "scenes": {
+   "strict": 6,
+   "loose": 32
+  }
+ },
+ {
+  "id": "tlg0006.tlg013",
+  "ja": "タウリケのイピゲネイア",
+  "grc": "Ἰφιγένεια ἐν Ταύροις",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1503,
+  "sp": 407,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 3,
+   "B_strict": 4,
+   "B_loose": 3
+  },
+  "vertices": 7,
+  "scenes": {
+   "strict": 4,
+   "loose": 22
+  }
+ },
+ {
+  "id": "tlg0006.tlg014",
+  "ja": "ヘレネ",
+  "grc": "Ἑλένη",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1729,
+  "sp": 491,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 4,
+   "B_strict": 4,
+   "B_loose": 4
+  },
+  "vertices": 9,
+  "scenes": {
+   "strict": 7,
+   "loose": 26
+  }
+ },
+ {
+  "id": "tlg0006.tlg015",
+  "ja": "フェニキアの女たち",
+  "grc": "Φοίνισσαι",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1812,
+  "sp": 423,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 10,
+  "scenes": {
+   "strict": 7,
+   "loose": 23
+  }
+ },
+ {
+  "id": "tlg0006.tlg016",
+  "ja": "オレステス",
+  "grc": "Ὀρέστης",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1763,
+  "sp": 531,
+  "chi": {
+   "A_strict": 6,
+   "A_loose": 3,
+   "B_strict": 6,
+   "B_loose": 3
+  },
+  "vertices": 10,
+  "scenes": {
+   "strict": 5,
+   "loose": 44
+  }
+ },
+ {
+  "id": "tlg0006.tlg017",
+  "ja": "バッコスの信女",
+  "grc": "Βάκχαι",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1420,
+  "sp": 325,
+  "chi": {
+   "A_strict": 3,
+   "A_loose": 3,
+   "B_strict": 3,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 14,
+   "loose": 39
+  }
+ },
+ {
+  "id": "tlg0006.tlg018",
+  "ja": "アウリスのイピゲネイア",
+  "grc": "Ἰφιγένεια ἐν Αὐλίδι",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1669,
+  "sp": 425,
+  "chi": {
+   "A_strict": 5,
+   "A_loose": 3,
+   "B_strict": 5,
+   "B_loose": 3
+  },
+  "vertices": 8,
+  "scenes": {
+   "strict": 6,
+   "loose": 20
+  }
+ },
+ {
+  "id": "tlg0006.tlg019",
+  "ja": "レソス",
+  "grc": "Ῥῆσος",
+  "author": "エウリピデス",
+  "genre": "悲劇",
+  "lines": 1006,
+  "sp": 207,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 4,
+   "B_strict": 4,
+   "B_loose": 4
+  },
+  "vertices": 12,
+  "scenes": {
+   "strict": 11,
+   "loose": 44
+  }
+ },
+ {
+  "id": "tlg0019.tlg001",
+  "ja": "アカルナイの人々",
+  "grc": "Ἀχαρνῆς",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1309,
+  "sp": 489,
+  "chi": {
+   "A_strict": 7,
+   "A_loose": 6,
+   "B_strict": 7,
+   "B_loose": 6
+  },
+  "vertices": 21,
+  "scenes": {
+   "strict": 12,
+   "loose": 44
+  }
+ },
+ {
+  "id": "tlg0019.tlg002",
+  "ja": "騎士",
+  "grc": "Ἱππῆς",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1501,
+  "sp": 557,
+  "chi": {
+   "A_strict": 4,
+   "A_loose": 4,
+   "B_strict": 4,
+   "B_loose": 4
+  },
+  "vertices": 5,
+  "scenes": {
+   "strict": 16,
+   "loose": 40
+  }
+ },
+ {
+  "id": "tlg0019.tlg003",
+  "ja": "雲",
+  "grc": "Νεφέλαι",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1659,
+  "sp": 662,
+  "chi": {
+   "A_strict": 8,
+   "A_loose": 8,
+   "B_strict": 8,
+   "B_loose": 8
+  },
+  "vertices": 15,
+  "scenes": {
+   "strict": 13,
+   "loose": 29
+  }
+ },
+ {
+  "id": "tlg0019.tlg004",
+  "ja": "蜂",
+  "grc": "Σφῆκες",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1675,
+  "sp": 536,
+  "chi": {
+   "A_strict": 6,
+   "A_loose": 6,
+   "B_strict": 6,
+   "B_loose": 6
+  },
+  "vertices": 9,
+  "scenes": {
+   "strict": 15,
+   "loose": 47
+  }
+ },
+ {
+  "id": "tlg0019.tlg005",
+  "ja": "平和",
+  "grc": "Εἰρήνη",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1470,
+  "sp": 583,
+  "chi": {
+   "A_strict": 9,
+   "A_loose": 9,
+   "B_strict": 9,
+   "B_loose": 9
+  },
+  "vertices": 17,
+  "scenes": {
+   "strict": 5,
+   "loose": 69
+  }
+ },
+ {
+  "id": "tlg0019.tlg006",
+  "ja": "鳥",
+  "grc": "Ὄρνιθες",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1967,
+  "sp": 752,
+  "chi": {
+   "A_strict": 9,
+   "A_loose": 9,
+   "B_strict": 9,
+   "B_loose": 9
+  },
+  "vertices": 23,
+  "scenes": {
+   "strict": 13,
+   "loose": 54
+  }
+ },
+ {
+  "id": "tlg0019.tlg007",
+  "ja": "リュシストラテ",
+  "grc": "Λυσιστράτη",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1443,
+  "sp": 565,
+  "chi": {
+   "A_strict": 10,
+   "A_loose": 5,
+   "B_strict": 10,
+   "B_loose": 5
+  },
+  "vertices": 18,
+  "scenes": {
+   "strict": 7,
+   "loose": 25
+  }
+ },
+ {
+  "id": "tlg0019.tlg008",
+  "ja": "女だけの祭",
+  "grc": "Θεσμοφοριάζουσαι",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1401,
+  "sp": 536,
+  "chi": {
+   "A_strict": 8,
+   "A_loose": 6,
+   "B_strict": 7,
+   "B_loose": 4
+  },
+  "vertices": 12,
+  "scenes": {
+   "strict": 7,
+   "loose": 30
+  }
+ },
+ {
+  "id": "tlg0019.tlg009",
+  "ja": "蛙",
+  "grc": "Βάτραχοι",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1798,
+  "sp": 752,
+  "chi": {
+   "A_strict": 6,
+   "A_loose": 6,
+   "B_strict": 6,
+   "B_loose": 6
+  },
+  "vertices": 13,
+  "scenes": {
+   "strict": 11,
+   "loose": 18
+  }
+ },
+ {
+  "id": "tlg0019.tlg010",
+  "ja": "女の議会",
+  "grc": "Ἐκκλησιάζουσαι",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1411,
+  "sp": 537,
+  "chi": {
+   "A_strict": 11,
+   "A_loose": 11,
+   "B_strict": 11,
+   "B_loose": 11
+  },
+  "vertices": 16,
+  "scenes": {
+   "strict": 5,
+   "loose": 9
+  }
+ },
+ {
+  "id": "tlg0019.tlg011",
+  "ja": "福の神",
+  "grc": "Πλοῦτος",
+  "author": "アリストパネス",
+  "genre": "喜劇",
+  "lines": 1397,
+  "sp": 655,
+  "chi": {
+   "A_strict": 12,
+   "A_loose": 7,
+   "B_strict": 12,
+   "B_loose": 7
+  },
+  "vertices": 12,
+  "scenes": {
+   "strict": 4,
+   "loose": 17
+  }
+ }
+]

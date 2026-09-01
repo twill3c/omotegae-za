@@ -145,7 +145,7 @@ def test_G04_彩色の計算経路に定数3が現れない():
     ]
     assert not hits, f"{py} に整数リテラル 3 がある"
 
-    ts = (ROOT / "web" / "lib" / "coloring.ts").read_text(encoding="utf-8")
+    ts = (ROOT / "src" / "lib" / "coloring.ts").read_text(encoding="utf-8")
     ts = re.sub(r"/\*.*?\*/", "", ts, flags=re.S)
     ts = re.sub(r"//.*", "", ts)
     assert not re.search(r"(?<![\w.])3(?![\w.])", ts), "coloring.ts に数値リテラル 3 がある"

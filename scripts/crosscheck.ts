@@ -7,9 +7,9 @@
  */
 
 import { readFileSync } from "node:fs";
-import { chromatic, type Graph } from "./coloring.ts";
+import { chromatic, type Graph } from "../src/lib/coloring.ts";
 
-const DERIVED = new URL("../../data/derived/", import.meta.url);
+const DERIVED = new URL("../data/derived/", import.meta.url);
 
 type GraphFile = Record<string, Record<string, { vertices: string[]; edges: string[][] }>>;
 type ColorFile = Record<string, Record<string, { chi: number; vertices: number }>>;
