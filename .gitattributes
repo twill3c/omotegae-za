@@ -1,0 +1,2 @@
+# data/raw は Perseus の原本。改行を含め一切変換しない(SPEC N-04)
+data/raw/** -text
