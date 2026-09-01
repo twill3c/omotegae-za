@@ -187,10 +187,25 @@ def main() -> int:
                 "notes_dropped": en["notes_dropped"],
             }
 
+        tr_path = ROOT / "data" / "translation" / f"{play}.json"
+        ja = {}
+        ja_meta = None
+        if tr_path.exists():
+            t = json.loads(tr_path.read_text(encoding="utf-8"))
+            ja = t["lines"]
+            ja_meta = {k: t.get(k, "") for k in ("translator", "license", "base", "note")}
+            # 和訳の行番号は原文に実在しなければならない(T-01)
+            unknown = sorted(set(ja) - gline_ns)
+            if unknown:
+                raise AssertionError(f"{play}: 原文に無い行に訳がある {unknown[:6]}")
+
         payload = {
             "id": play,
             "speeches": speeches,
             "en": en,
+            "ja": ja,
+            "ja_meta": ja_meta,
+            "ja_count": len(ja),
             "align": {
                 "matched": matched,
                 "unmatched": unmatched,
@@ -210,6 +225,7 @@ def main() -> int:
 
         report[play] = {
             "lines": kept,
+            "ja": len(ja),
             "speeches": len(speeches),
             "en": ver,
             **payload["align"],

@@ -185,3 +185,6 @@ tbody tr:hover { background: var(--rule-soft); }
 }
 
 .stage { display: block; color: var(--ink-faint); font-style: italic; font-size: .78rem; }
+
+.ln__ja { grid-column: 2; font-size: .9rem; line-height: 1.6; color: var(--ink); padding-bottom: .12rem; }
+.sp--chorus .ln__ja { color: var(--ink-soft); }

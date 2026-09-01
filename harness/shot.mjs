@@ -25,6 +25,7 @@ const PAGES = [
   ["play-birds", "/play/tlg0019.tlg006/"],
   ["read-choephori", "/play/tlg0085.tlg006/read/"],
   ["read-frogs", "/play/tlg0019.tlg009/read/"],
+  ["read-persians", "/play/tlg0085.tlg002/read/"],
 ];
 
 const MIME = {

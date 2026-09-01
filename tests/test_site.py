@@ -165,6 +165,36 @@ def test_落ちたゲートが方法のページに書かれている():
 
 
 @pytest.mark.validation
+def test_ソースにもキリル文字が混じらない():
+    """N-03 を**出荷物だけでなくソースにも**掛ける。
+
+    L8 で検査スクリプトの日本語メッセージに自分でキリル文字 4 字を書き込んだ
+    (ロシア語で「二つの」にあたる語。ここには引用しない —— **引用した瞬間に
+    この検査が発火する**ので、それ自体が検査が効いている証拠になる)。
+    出荷 HTML しか見ていなかったので、`pipeline/` は素通りだった。
+    検出器自身が範囲リテラル(Ѐ-ӿ)を持つので、その 2 文字だけは除外する。
+    """
+    cyr = re.compile(r"[Ѐ-ӿ]")
+    targets = [
+        *(ROOT / "pipeline").rglob("*.py"),
+        *(ROOT / "tests").rglob("*.py"),
+        *(ROOT / "harness").rglob("*.mjs"),
+        *(ROOT / "src").rglob("*.ts"),
+        *(ROOT / "src").rglob("*.tsx"),
+        *(ROOT / "data" / "translation").rglob("*.json"),
+    ]
+    assert targets, "走査対象が空 —— 検査が空回りしている"
+    bad = []
+    for p in targets:
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if "Ѐ-ӿ" in line:  # 検出器の範囲リテラルそのもの
+                continue
+            for m in cyr.finditer(line):
+                bad.append((p.name, m.group(), line.strip()[:40]))
+    assert not bad, bad[:5]
+
+
+@pytest.mark.validation
 def test_日本語本文にキリル文字が混じらない():
     """[[fleet-cyrillic-leak]] — 字形が似て目視では気づけない(SPEC N-03)。
 

@@ -34,6 +34,9 @@ interface Reader {
     stages: Record<string, string[]>;
     notes_dropped: number;
   } | null;
+  ja: Record<string, string>;
+  ja_meta: { translator: string; license: string; base: string; note: string } | null;
+  ja_count: number;
   align: { matched: number; unmatched: number; blocks: number };
 }
 
@@ -76,6 +79,8 @@ export default async function Read({ params }: { params: Promise<{ id: string }>
   const r = loadReader(id);
   const anchored = r.en?.anchored ?? {};
   const stages = r.en?.stages ?? {};
+  const ja = r.ja ?? {};
+  const total = r.speeches.reduce((a, s) => a + s.lines.length, 0);
 
   return (
     <main className="wrap" style={{ paddingTop: "2rem" }}>
@@ -90,8 +95,22 @@ export default async function Read({ params }: { params: Promise<{ id: string }>
       </h1>
       <p className="lede">
         Perseus のギリシア語校訂本文を<b>行番号のまま</b>読む。
-        左が原文、右が英訳。話者名は原文のラベルをそのまま出している。
+        左が原文で、訳出済みの行にはその下に和訳を添える。右は英訳。
+        話者名は原文のラベルをそのまま出している。
       </p>
+
+      {r.ja_meta && (
+        <div className="note">
+          <strong>和訳:</strong> {r.ja_meta.translator}・{r.ja_meta.license}。
+          {r.ja_meta.base}に基づく。
+          <br />
+          充填率 <b>{r.ja_count.toLocaleString()} / {total.toLocaleString()} 行(
+          {((r.ja_count / total) * 100).toFixed(1)}%)</b>。
+          原文一行に訳文一行を当て、固有名は台帳で全篇そろえている。
+          <b>訳の巧拙は主張しない</b> —— 測っているのは行対応・発話の完全性・
+          割られた行の保存・固有名と数詞の消化だけである。
+        </div>
+      )}
 
       {r.en ? (
         <div className="note">
@@ -151,6 +170,7 @@ export default async function Read({ params }: { params: Promise<{ id: string }>
                     <div className="ln" key={n} id={`l${n}`}>
                       <span className="ln__n">{/\d0$|\d5$/.test(n) || n === "1" ? n : ""}</span>
                       <span className="ln__grc grc">{t}</span>
+                      {ja[n] && <span className="ln__ja">{ja[n]}</span>}
                     </div>
                   ))}
                 </div>
