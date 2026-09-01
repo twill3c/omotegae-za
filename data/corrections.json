@@ -1,0 +1,28 @@
+{
+  "_": [
+    "Perseus 底本の行番号の破損に対する補正表。人が一件ずつ判断して書く。",
+    "data/raw は原本のまま据え置き(SPEC N-04)、補正はここでのみ行う。",
+    "各件に『何を見てそう決めたか』を書く —— 前後の行番号は追試できる根拠である。",
+    "上流(PerseusDL/canonical-greekLit)への報告対象でもある。"
+  ],
+  "line_numbers": [
+    {
+      "play": "tlg0019.tlg011",
+      "title": "Πλοῦτος(福の神)",
+      "observed": "3933",
+      "corrected": "393e",
+      "evidence": "前後が 393 / 393b / 393c / 393d / [3933] / 393f / 394 と続く。393e の位置に相当し、枝番 e が 3933 に化けている",
+      "found": "2026-09-02 loop_000",
+      "reported_upstream": false
+    },
+    {
+      "play": "tlg0019.tlg011",
+      "title": "Πλοῦτος(福の神)",
+      "observed": "NaN",
+      "corrected": "128",
+      "evidence": "前後が 126 / 127 / 127b / [NaN] / 129 / 129b / 129c と続く。欠けているのは 128 のみ",
+      "found": "2026-09-02 loop_001(テスト test_行番号の枝番は数値部を持つ が検出)",
+      "reported_upstream": false
+    }
+  ]
+}
