@@ -73,7 +73,7 @@ def permuted_scenes(units, mode: str, rng: random.Random) -> list[dict]:
             k += 1
         else:
             shuffled.append((cls, roles, d, sub))
-    scene_list, _nb, _c = SC.segment(shuffled, mode)
+    scene_list, _nb, _c, _b = SC.segment(shuffled, mode)
     return [{"roles": sorted(s["roles"]), "sp": s["sp"]} for s in scene_list]
 
 

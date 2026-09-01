@@ -51,24 +51,26 @@ export default async function PlayPage({ params }: { params: Promise<{ id: strin
         </dd>
         <dt>本文</dt>
         <dd>
-          <Link href={`/play/${d.id}/read/`}>原文を行番号のまま読む →</Link>
+          <Link href={`/play/${d.id}/read/`} prefetch={false}>
+            原文を行番号のまま読む →
+          </Link>
         </dd>
       </dl>
 
       <h2>骨格帯</h2>
       <p className="lede">
-        幅は発話数に比例。色は<b>その場面に居合わせる役の数</b>。
-        灰色は合唱隊だけの区間で、ここが場面の境界になる。
+        幅は発話数に比例。場面は<b>そこに居合わせる役の数</b>で塗り、
+        合唱歌は灰色にした。灰色の位置で登退場が起こりうる。
       </p>
       <h3>緩 — 合唱隊の発話 1 件で切る</h3>
-      <Band scenes={d.band.A_loose} height={26} />
+      <Band items={d.band.A_loose} height={26} />
       <p style={{ fontSize: ".8rem", color: "var(--ink-faint)" }}>
-        {d.band.A_loose.length} 場面 / 境界 {d.boundaries.A_loose} 件
+        {d.scenes.loose} 場面 / 合唱歌の区間 {d.boundaries.A_loose} 発話ぶん
       </p>
       <h3>厳 — 合唱隊だけの div でのみ切る</h3>
-      <Band scenes={d.band.A_strict} height={26} />
+      <Band items={d.band.A_strict} height={26} />
       <p style={{ fontSize: ".8rem", color: "var(--ink-faint)" }}>
-        {d.band.A_strict.length} 場面 / 境界 {d.boundaries.A_strict} 件。
+        {d.scenes.strict} 場面 / 合唱歌の区間 {d.boundaries.A_strict} 発話ぶん。
         厳は場面を併合するので衝突が増え、χ は減らない —— <b>反証側の測り方</b>である。
       </p>
 
@@ -195,7 +197,7 @@ export default async function PlayPage({ params }: { params: Promise<{ id: strin
           <strong>この篇では実測が偽の劇の平均を上回っている。</strong>
           偶然より「悪く」見えるということで、方法の弱点の徴候である。
           合唱隊が語らない区間(とくに合唱隊登場前のプロロゴス)では退場を検出できず、
-          実際には同席していない役が結ばれる。<Link href="/method/">方法</Link>を参照。
+          実際には同席していない役が結ばれる。<Link href="/method/" prefetch={false}>方法</Link>を参照。
         </div>
       )}
 
@@ -257,8 +259,20 @@ export default async function PlayPage({ params }: { params: Promise<{ id: strin
       </dl>
 
       <nav style={{ display: "flex", justifyContent: "space-between", marginTop: "2.5rem", fontSize: ".88rem" }}>
-        <span>{prev && <Link href={`/play/${prev.id}/`}>← {prev.ja}</Link>}</span>
-        <span>{next && <Link href={`/play/${next.id}/`}>{next.ja} →</Link>}</span>
+        <span>
+          {prev && (
+            <Link href={`/play/${prev.id}/`} prefetch={false}>
+              ← {prev.ja}
+            </Link>
+          )}
+        </span>
+        <span>
+          {next && (
+            <Link href={`/play/${next.id}/`} prefetch={false}>
+              {next.ja} →
+            </Link>
+          )}
+        </span>
       </nav>
     </main>
   );

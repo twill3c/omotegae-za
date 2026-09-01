@@ -21,7 +21,7 @@ export interface PlayDetail extends PlaySummary {
   cast: Record<string, Record<string, string[]>>;
   edge_count: Record<string, number>;
   edges: Record<string, string[][]>;
-  band: Record<string, { roles: string[]; sp: number }[]>;
+  band: Record<string, { kind: "scene" | "chorus"; roles?: string[]; sp: number }[]>;
   boundaries: Record<string, number>;
   excess: Record<
     string,

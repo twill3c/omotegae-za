@@ -23,13 +23,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header className="masthead">
           <div className="masthead__inner">
-            <Link href="/" className="masthead__title">
+            <Link href="/" prefetch={false} className="masthead__title">
               面替え座
             </Link>
             <span className="masthead__sub">ギリシア四大劇作家 45 篇</span>
             <nav>
-              <Link href="/">骨格帯</Link>
-              <Link href="/method/">方法</Link>
+              <Link href="/" prefetch={false}>骨格帯</Link>
+              <Link href="/method/" prefetch={false}>方法</Link>
             </nav>
           </div>
         </header>

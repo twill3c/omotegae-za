@@ -37,6 +37,32 @@ interface Reader {
   align: { matched: number; unmatched: number; blocks: number };
 }
 
+/**
+ * 錨のある行で束に切る。
+ *
+ * 散文訳は数行をひとまとめにするので、一行ごとの格子に載せると
+ * **英訳の高さが原文の行間を押し広げ、縦の間隔がばらつく**(L7 の目視で発見)。
+ * 錨から次の錨までを一束にすれば、左右の高さが自然に釣り合う。
+ * 対応の正しさは変わらない —— 束の先頭行が、その英訳が指す行である。
+ */
+function chunk(
+  lines: [string, string][],
+  anchored: Record<string, string>,
+  stages: Record<string, string[]>,
+): { lines: [string, string][]; en: string; stages: string[] }[] {
+  const out: { lines: [string, string][]; en: string; stages: string[] }[] = [];
+  for (const ln of lines) {
+    const [n] = ln;
+    const hasAnchor = anchored[n] !== undefined || stages[n] !== undefined;
+    if (out.length === 0 || hasAnchor) {
+      out.push({ lines: [ln], en: anchored[n] ?? "", stages: stages[n] ?? [] });
+    } else {
+      out[out.length - 1].lines.push(ln);
+    }
+  }
+  return out;
+}
+
 function loadReader(id: string): Reader {
   if (!/^tlg\d{4}\.tlg\d{3}$/.test(id)) throw new Error(`不正な識別子: ${id}`);
   const f = path.join(process.cwd(), "src", "data", "reader", `${id}.json`);
@@ -54,7 +80,10 @@ export default async function Read({ params }: { params: Promise<{ id: string }>
   return (
     <main className="wrap" style={{ paddingTop: "2rem" }}>
       <p style={{ color: "var(--ink-faint)", fontSize: ".82rem", margin: 0 }}>
-        <Link href={`/play/${id}/`}>{meta.ja}</Link> ・ {meta.author}
+        <Link href={`/play/${id}/`} prefetch={false}>
+          {meta.ja}
+        </Link>{" "}
+        ・ {meta.author}
       </p>
       <h1>
         {meta.ja} <span className="grc" style={{ fontSize: "1.1rem", color: "var(--ink-faint)" }}>{meta.grc}</span>
@@ -115,18 +144,24 @@ export default async function Read({ params }: { params: Promise<{ id: string }>
                 </span>
               )}
             </h2>
-            {s.lines.map(([n, t]) => (
-              <div className="ln" key={n} id={`l${n}`}>
-                <span className="ln__n">{/\d0$|\d5$/.test(n) || n === "1" ? n : ""}</span>
-                <span className="ln__grc grc">{t}</span>
-                <span className="ln__en">
-                  {stages[n]?.map((x, k) => (
-                    <span className="stage" key={k}>
+            {chunk(s.lines, anchored, stages).map((c, k) => (
+              <div className="chunk" key={k}>
+                <div className="chunk__grc">
+                  {c.lines.map(([n, t]) => (
+                    <div className="ln" key={n} id={`l${n}`}>
+                      <span className="ln__n">{/\d0$|\d5$/.test(n) || n === "1" ? n : ""}</span>
+                      <span className="ln__grc grc">{t}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="chunk__en">
+                  {c.stages.map((x, j) => (
+                    <span className="stage" key={j}>
                       〔{x}〕
                     </span>
                   ))}
-                  {anchored[n] ?? ""}
-                </span>
+                  {c.en}
+                </div>
               </div>
             ))}
           </section>

@@ -143,13 +143,10 @@ def main() -> int:
                 m: sorted(sorted(e) for e in _edges(scn[pid][m]["scenes"]))
                 for m in ("A_strict", "A_loose")
             },
-            "band": {
-                m: [
-                    {"roles": s["roles"], "sp": s["sp"]}
-                    for s in scn[pid][m]["scenes"]
-                ]
-                for m in ("A_strict", "A_loose")
-            },
+            # 帯には**境界(合唱歌)も描く**。場面だけを並べると合唱歌の位置が
+            # 見えず、凡例の「合唱隊のみ」が図に存在しない色を指すことになる
+            # (L7 の実ブラウザ検品で発見)。
+            "band": {m: scn[pid][m]["band"] for m in ("A_strict", "A_loose")},
             "boundaries": {m: scn[pid][m]["boundaries"] for m in ("A_strict", "A_loose")},
             "excess": {
                 m: {

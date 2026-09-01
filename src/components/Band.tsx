@@ -1,7 +1,8 @@
 import { CLAIMED_ACTORS } from "@/lib/site";
 
-export interface Scene {
-  roles: string[];
+export interface BandItem {
+  kind: "scene" | "chorus";
+  roles?: string[];
   sp: number;
 }
 
@@ -13,25 +14,42 @@ function tone(n: number): string {
   return "var(--tone-many)";
 }
 
-export function Band({ scenes, height }: { scenes: Scene[]; height?: number }) {
-  const total = scenes.reduce((s, x) => s + x.sp, 0) || 1;
+/**
+ * 骨格帯 —— 発話の進行に沿って、場面と合唱歌(境界)を並べる。
+ *
+ * 幅は発話数に比例。場面は同席役数で色を塗り、合唱歌は灰色にする。
+ * **境界を描かないと合唱歌の位置が見えない** —— 劇の骨格は
+ * 場面と合唱歌の交替そのものなので、片方だけでは骨格にならない。
+ */
+export function Band({ items, height }: { items: BandItem[]; height?: number }) {
+  let sceneIndex = -1;
   return (
     <div className="band" style={height ? { height: `${height}px` } : undefined}>
-      {scenes.map((s, i) => (
-        <div
-          key={i}
-          className={"band__seg" + (s.roles.length === 0 ? " band__seg--chorus" : "")}
-          style={{
-            flex: `${s.sp} 0 0`,
-            background: s.roles.length === 0 ? undefined : tone(s.roles.length),
-          }}
-          title={
-            `第 ${i} 場面 — 発話 ${s.sp} / 役 ${s.roles.length}` +
-            (s.roles.length ? `\n${s.roles.join(" ・ ")}` : "(合唱隊のみ)")
-          }
-        />
-      ))}
-      {/* 幅は発話数に比例する。合計 ${total} 発話。 */}
+      {items.map((s, i) => {
+        if (s.kind === "chorus") {
+          return (
+            <div
+              key={i}
+              className="band__seg band__seg--chorus"
+              style={{ flex: `${s.sp} 0 0` }}
+              title={`合唱歌 — 発話 ${s.sp}(ここで登退場が起こりうる)`}
+            />
+          );
+        }
+        sceneIndex += 1;
+        const roles = s.roles ?? [];
+        return (
+          <div
+            key={i}
+            className="band__seg"
+            style={{ flex: `${s.sp} 0 0`, background: tone(roles.length) }}
+            title={
+              `第 ${sceneIndex} 場面 — 発話 ${s.sp} / 役 ${roles.length}` +
+              (roles.length ? `\n${roles.join(" ・ ")}` : "")
+            }
+          />
+        );
+      })}
     </div>
   );
 }

@@ -133,6 +133,29 @@ def test_打ち切った件数は画面に出す(plays):
 
 
 @pytest.mark.validation
+def test_凡例の色はすべて図に現れる():
+    """**凡例が図に無い色を載せない。**
+
+    L7 の実ブラウザ検品で発見: 骨格帯の凡例に「合唱隊のみ」があったが、
+    緩でも厳でもその区画は 0 件で、**図に存在しない色を説明していた**。
+    境界(合唱歌)を帯に描くことで解消した。
+
+    ここでは凡例の各色が、同じページの帯に少なくとも 1 つ現れることを検査する。
+    色は CSS 変数名で照合する(算出値ではなく指定値を見る —— HC-068)。
+    """
+    _need_build()
+    html = (OUT / "index.html").read_text(encoding="utf-8")
+    legend = set(re.findall(r"background:\s*var\(--(tone-[a-z0-9]+|chorus)\)", html))
+    assert legend, "凡例の色が 1 つも取れていない — 検査が空回りしている"
+    for color in legend:
+        # 凡例は各色をちょうど 1 回だけ使う。図でも使われていれば 2 回以上出る。
+        n = len(re.findall(rf"var\(--{color}\)", html))
+        assert n > 1, f"凡例の色 --{color} が凡例にしか現れない(図に無い色を説明している)"
+    # 合唱歌(境界)の区画が実際に描かれていること —— 一度これが 0 だった
+    assert "band__seg--chorus" in html
+
+
+@pytest.mark.validation
 def test_落ちたゲートが方法のページに書かれている():
     """通らなかったことを消さない。"""
     _need_build()

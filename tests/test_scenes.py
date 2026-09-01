@@ -140,7 +140,7 @@ def test_境界に選ばれたdivは合唱歌の語彙が支配的である():
         play = path.name.split(".perseus-")[0]
         root = ET.parse(path).getroot()
         units = list(SC.speech_units(root, ledger, "A", play))
-        _sc, _nb, c = SC.segment(units, "strict")
+        _sc, _nb, c, _b = SC.segment(units, "strict")
         cuts += c
 
     sung = {

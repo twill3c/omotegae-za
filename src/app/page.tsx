@@ -27,13 +27,13 @@ export default function Home() {
         <br />
         当初は「悲劇 34 篇のうち 31 篇以上で χ ≤ 3」を事前登録したが、
         <b>この予測は落ちた</b>。落ちた経緯と、それでも出た構造は
-        <Link href="/method/">方法</Link>に記した。
+        <Link href="/method/" prefetch={false}>方法</Link>に記した。
       </div>
 
       <h2>骨格帯</h2>
       <p className="lede">
-        横軸は発話の進行(幅は発話数に比例)。合唱隊の歌で区切られた場面ごとに、
-        <b>その場面に居合わせる役の数</b>で色を塗った。
+        横軸は発話の進行(幅は発話数に比例)。場面は<b>そこに居合わせる役の数</b>で塗り、
+        合唱歌は灰色にした。灰色の位置で登退場が起こりうる。
         <Legend />
       </p>
 
@@ -47,10 +47,10 @@ export default function Home() {
           </h3>
           {playsOf(author).map((p) => (
             <div className="bandrow" key={p.id}>
-              <Link href={`/play/${p.id}/`} className="bandrow__name">
+              <Link href={`/play/${p.id}/`} prefetch={false} className="bandrow__name">
                 {p.ja}
               </Link>
-              <Band scenes={details[p.id].band.A_loose} />
+              <Band items={details[p.id].band.A_loose} />
               <span
                 className="bandrow__chi"
                 style={{ color: p.chi.A_loose > CLAIMED_ACTORS ? "var(--tone-many)" : "var(--ink-soft)" }}
@@ -83,7 +83,9 @@ export default function Home() {
             {PLAYS.map((p) => (
               <tr key={p.id}>
                 <td>
-                  <Link href={`/play/${p.id}/`}>{p.ja}</Link>
+                  <Link href={`/play/${p.id}/`} prefetch={false}>
+                    {p.ja}
+                  </Link>
                 </td>
                 <td className="grc">{p.grc}</td>
                 <td>{p.author}</td>
@@ -122,7 +124,7 @@ function Legend() {
     ["3 役", "var(--tone-3)"],
     ["4 役", "var(--tone-4)"],
     ["5 役以上", "var(--tone-many)"],
-    ["合唱隊のみ", "var(--chorus)"],
+    ["合唱歌(境界)", "var(--chorus)"],
   ];
   return (
     <span style={{ display: "inline-flex", flexWrap: "wrap", gap: ".8rem", marginLeft: ".6rem" }}>

@@ -111,7 +111,10 @@ export default function Method() {
       <ul>
         {over.map((p) => (
           <li key={p.id}>
-            <Link href={`/play/${p.id}/`}>{p.ja}</Link>(χ = {p.chi.A_loose})
+            <Link href={`/play/${p.id}/`} prefetch={false}>
+              {p.ja}
+            </Link>
+            (χ = {p.chi.A_loose})
           </li>
         ))}
       </ul>
@@ -147,7 +150,7 @@ export default function Method() {
       </p>
       <p>
         この弱点は、独立の経路からも指摘された。45 篇 × 厳緩 = 90 組のうち
-        <b>実測が偽の劇の平均を上回ったのは『<Link href="/play/tlg0085.tlg007/">エウメニデス</Link>』緩の 1 組だけ</b>で、
+        <b>実測が偽の劇の平均を上回ったのは『<Link href="/play/tlg0085.tlg007/" prefetch={false}>エウメニデス</Link>』緩の 1 組だけ</b>で、
         まさに上の弱点を指摘していた篇である。実際そこで結ばれる四役
         (ピュティア・アポロン・オレステス・クリュタイムネストラの亡霊)は第 0 場面 ——
         プロロゴス —— に現れ、ピュティアは亡霊の登場前に退場している。

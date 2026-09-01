@@ -47,7 +47,7 @@ def test_置換は保つべきものを保つ():
     ledger = SC.load_ledger()
     root = ET.parse(ROOT / "data" / "raw" / f"{play}.perseus-grc2.xml").getroot()
     units = list(SC.speech_units(root, ledger, "A", play))
-    base, _nb, _c = SC.segment(units, "loose")
+    base, _nb, _c, _b = SC.segment(units, "loose")
     base_sizes = [s["sp"] for s in base]
     base_roles = {r for s in base for r in s["roles"]}
     base_counts = Counter(

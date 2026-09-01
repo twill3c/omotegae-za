@@ -133,6 +133,17 @@ def segment(units, mode: str):
 
     scenes, cur, boundaries = [], {"roles": set(), "sp": 0}, 0
     cut_subtypes = Counter()
+    # 表示用の帯。場面と**境界**を発話の順に並べる。境界は場面ではないので
+    # scenes には入れないが、帯に描かないと合唱歌の位置が見えなくなる。
+    band: list[dict] = []
+    run = 0
+
+    def flush_boundary():
+        nonlocal run
+        if run:
+            band.append({"kind": "chorus", "sp": run})
+            run = 0
+
     for cls, roles, div, sub in units:
         if mode == "loose":
             is_boundary = cls == "chorus"
@@ -140,12 +151,15 @@ def segment(units, mode: str):
             is_boundary = div in chorus_only
         if is_boundary:
             boundaries += 1
+            run += 1
             if sub:
                 cut_subtypes[sub] += 1
             if cur["sp"]:
                 scenes.append(cur)
+                band.append({"kind": "scene", "roles": sorted(cur["roles"]), "sp": cur["sp"]})
                 cur = {"roles": set(), "sp": 0}
             continue
+        flush_boundary()
         if cls == "chorus":
             # 厳では、合唱隊だけの div に属さない合唱隊発話は境界にしない。
             # 合唱隊は俳優が演じないので場面の役にも数えない。ただし発話は消費する。
@@ -153,9 +167,11 @@ def segment(units, mode: str):
             continue
         cur["roles"] |= roles
         cur["sp"] += 1
+    flush_boundary()
     if cur["sp"]:
         scenes.append(cur)
-    return scenes, boundaries, cut_subtypes
+        band.append({"kind": "scene", "roles": sorted(cur["roles"]), "sp": cur["sp"]})
+    return scenes, boundaries, cut_subtypes, band
 
 
 def main() -> int:
@@ -171,7 +187,7 @@ def main() -> int:
         for reading in ("A", "B"):
             units = list(speech_units(root, ledger, reading, play))
             for mode in ("strict", "loose"):
-                scenes, nb, cuts = segment(units, mode)
+                scenes, nb, cuts, band = segment(units, mode)
                 consumed = sum(s["sp"] for s in scenes) + nb
                 # G-02: 発話の消化率。すべての <sp> が場面か境界のどちらかに属する。
                 if consumed != total_sp:
@@ -181,6 +197,7 @@ def main() -> int:
                 rec[f"{reading}_{mode}"] = {
                     "scenes": [{"roles": sorted(s["roles"]), "sp": s["sp"]} for s in scenes],
                     "boundaries": nb,
+                    "band": band,
                 }
                 if reading == "A":
                     cut_all[mode] += cuts
