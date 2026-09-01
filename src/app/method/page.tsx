@@ -162,7 +162,7 @@ export default function Method() {
           <b>韻律・韻</b> —— <code>@rend</code> は校訂者ごとに 0.0%〜25.5% とばらけ、手がかりにならない
         </li>
         <li>
-          <b>英訳</b> —— Perseus は 45 篇中 41 篇に英訳を持つが、χ は原文から導いている
+          <b>英訳</b> —— Perseus は 45 篇中 36 篇に英訳を持つが、χ は原文から導いている
         </li>
       </ul>
 

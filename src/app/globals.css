@@ -146,3 +146,34 @@ tbody tr:hover { background: var(--rule-soft); }
   .bandrow { grid-template-columns: 8.5rem 1fr 2.2rem; gap: .5rem; }
   h1 { font-size: 1.5rem; }
 }
+
+/* ------- リーダー ------- */
+.reader { margin-top: 1.5rem; }
+
+.sp { margin: 0 0 1.15rem; }
+.sp__who {
+  font-family: var(--grc); font-size: .9rem; font-weight: 600; letter-spacing: .04em;
+  color: var(--accent); margin: 0 0 .2rem; padding: 0; border: 0;
+}
+.sp__note { font-family: var(--sans); font-size: .7rem; color: var(--ink-faint); margin-left: .5rem; font-weight: 400; }
+.sp--chorus .sp__who { color: var(--ink-faint); }
+.sp--chorus .ln__grc { color: var(--ink-soft); }
+
+.ln {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 1.4rem;
+  align-items: baseline;
+  padding: .04rem 0;
+}
+.ln:target { background: var(--accent-soft); }
+.ln__n { font-size: .68rem; color: var(--ink-faint); text-align: right; font-variant-numeric: tabular-nums; }
+.ln__grc { font-family: var(--grc); font-size: 1rem; line-height: 1.65; }
+.ln__en { font-size: .84rem; line-height: 1.6; color: var(--ink-soft); }
+
+@media (max-width: 820px) {
+  .ln { grid-template-columns: 2.6rem minmax(0, 1fr); gap: 0 .8rem; }
+  .ln__en { grid-column: 2; font-size: .8rem; padding-bottom: .35rem; }
+}
+
+.stage { display: block; color: var(--ink-faint); font-style: italic; font-size: .78rem; }

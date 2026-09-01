@@ -1,0 +1,362 @@
+{
+ "tlg0006.tlg001": {
+  "lines": 744,
+  "speeches": 256,
+  "en": "eng2",
+  "matched": 356,
+  "unmatched": 0,
+  "blocks": 356
+ },
+ "tlg0006.tlg002": {
+  "lines": 1171,
+  "speeches": 323,
+  "en": "eng2",
+  "matched": 503,
+  "unmatched": 1,
+  "blocks": 504
+ },
+ "tlg0006.tlg003": {
+  "lines": 1407,
+  "speeches": 250,
+  "en": "eng2",
+  "matched": 502,
+  "unmatched": 0,
+  "blocks": 502
+ },
+ "tlg0006.tlg004": {
+  "lines": 1055,
+  "speeches": 212,
+  "en": "eng2",
+  "matched": 381,
+  "unmatched": 0,
+  "blocks": 381
+ },
+ "tlg0006.tlg005": {
+  "lines": 1458,
+  "speeches": 299,
+  "en": "eng2",
+  "matched": 561,
+  "unmatched": 0,
+  "blocks": 561
+ },
+ "tlg0006.tlg006": {
+  "lines": 1284,
+  "speeches": 213,
+  "en": "eng2",
+  "matched": 435,
+  "unmatched": 1,
+  "blocks": 436
+ },
+ "tlg0006.tlg007": {
+  "lines": 1278,
+  "speeches": 262,
+  "en": "eng2",
+  "matched": 489,
+  "unmatched": 0,
+  "blocks": 489
+ },
+ "tlg0006.tlg008": {
+  "lines": 1249,
+  "speeches": 252,
+  "en": "eng2",
+  "matched": 471,
+  "unmatched": 2,
+  "blocks": 473
+ },
+ "tlg0006.tlg009": {
+  "lines": 1450,
+  "speeches": 299,
+  "en": "eng2",
+  "matched": 549,
+  "unmatched": 1,
+  "blocks": 550
+ },
+ "tlg0006.tlg010": {
+  "lines": 1688,
+  "speeches": 561,
+  "en": "eng2",
+  "matched": 801,
+  "unmatched": 0,
+  "blocks": 801
+ },
+ "tlg0006.tlg011": {
+  "lines": 1349,
+  "speeches": 229,
+  "en": "eng2",
+  "matched": 455,
+  "unmatched": 2,
+  "blocks": 457
+ },
+ "tlg0006.tlg012": {
+  "lines": 1369,
+  "speeches": 372,
+  "en": "eng2",
+  "matched": 568,
+  "unmatched": 0,
+  "blocks": 568
+ },
+ "tlg0006.tlg013": {
+  "lines": 1498,
+  "speeches": 406,
+  "en": "eng2",
+  "matched": 663,
+  "unmatched": 1,
+  "blocks": 664
+ },
+ "tlg0006.tlg014": {
+  "lines": 1727,
+  "speeches": 491,
+  "en": "eng2",
+  "matched": 753,
+  "unmatched": 1,
+  "blocks": 754
+ },
+ "tlg0006.tlg015": {
+  "lines": 1810,
+  "speeches": 423,
+  "en": "eng2",
+  "matched": 736,
+  "unmatched": 0,
+  "blocks": 736
+ },
+ "tlg0006.tlg016": {
+  "lines": 1762,
+  "speeches": 531,
+  "en": "eng2",
+  "matched": 827,
+  "unmatched": 0,
+  "blocks": 827
+ },
+ "tlg0006.tlg017": {
+  "lines": 1411,
+  "speeches": 322,
+  "en": "eng2",
+  "matched": 539,
+  "unmatched": 2,
+  "blocks": 541
+ },
+ "tlg0006.tlg018": {
+  "lines": 1668,
+  "speeches": 425,
+  "en": "eng2",
+  "matched": 703,
+  "unmatched": 1,
+  "blocks": 704
+ },
+ "tlg0006.tlg019": {
+  "lines": 1005,
+  "speeches": 207,
+  "en": "eng3",
+  "matched": 386,
+  "unmatched": 7,
+  "blocks": 393
+ },
+ "tlg0011.tlg001": {
+  "lines": 1242,
+  "speeches": 273,
+  "en": "eng3",
+  "matched": 467,
+  "unmatched": 13,
+  "blocks": 480
+ },
+ "tlg0011.tlg002": {
+  "lines": 1257,
+  "speeches": 299,
+  "en": "eng2",
+  "matched": 515,
+  "unmatched": 1,
+  "blocks": 516
+ },
+ "tlg0011.tlg003": {
+  "lines": 1376,
+  "speeches": 310,
+  "en": "eng2",
+  "matched": 519,
+  "unmatched": 9,
+  "blocks": 528
+ },
+ "tlg0011.tlg004": {
+  "lines": 1481,
+  "speeches": 457,
+  "en": "eng2",
+  "matched": 679,
+  "unmatched": 5,
+  "blocks": 684
+ },
+ "tlg0011.tlg005": {
+  "lines": 1486,
+  "speeches": 421,
+  "en": "eng2",
+  "matched": 627,
+  "unmatched": 17,
+  "blocks": 644
+ },
+ "tlg0011.tlg006": {
+  "lines": 1465,
+  "speeches": 414,
+  "en": "eng2",
+  "matched": 619,
+  "unmatched": 11,
+  "blocks": 630
+ },
+ "tlg0011.tlg007": {
+  "lines": 1809,
+  "speeches": 543,
+  "en": "eng2",
+  "matched": 793,
+  "unmatched": 25,
+  "blocks": 818
+ },
+ "tlg0011.tlg008": {
+  "lines": 397,
+  "speeches": 97,
+  "en": "eng2",
+  "matched": 119,
+  "unmatched": 2,
+  "blocks": 121
+ },
+ "tlg0019.tlg001": {
+  "lines": 1306,
+  "speeches": 489,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg002": {
+  "lines": 1499,
+  "speeches": 557,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg003": {
+  "lines": 1656,
+  "speeches": 661,
+  "en": "eng2",
+  "matched": 783,
+  "unmatched": 0,
+  "blocks": 783
+ },
+ "tlg0019.tlg004": {
+  "lines": 1673,
+  "speeches": 535,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg005": {
+  "lines": 1468,
+  "speeches": 583,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg006": {
+  "lines": 1966,
+  "speeches": 752,
+  "en": "eng2",
+  "matched": 989,
+  "unmatched": 5,
+  "blocks": 994
+ },
+ "tlg0019.tlg007": {
+  "lines": 1440,
+  "speeches": 565,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg008": {
+  "lines": 1400,
+  "speeches": 536,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg009": {
+  "lines": 1796,
+  "speeches": 752,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg010": {
+  "lines": 1408,
+  "speeches": 537,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0019.tlg011": {
+  "lines": 1396,
+  "speeches": 655,
+  "en": null,
+  "matched": 0,
+  "unmatched": 0,
+  "blocks": 0
+ },
+ "tlg0085.tlg001": {
+  "lines": 1072,
+  "speeches": 232,
+  "en": "eng2",
+  "matched": 395,
+  "unmatched": 5,
+  "blocks": 400
+ },
+ "tlg0085.tlg002": {
+  "lines": 1064,
+  "speeches": 212,
+  "en": "eng2",
+  "matched": 379,
+  "unmatched": 0,
+  "blocks": 379
+ },
+ "tlg0085.tlg003": {
+  "lines": 1096,
+  "speeches": 219,
+  "en": "eng2",
+  "matched": 391,
+  "unmatched": 2,
+  "blocks": 393
+ },
+ "tlg0085.tlg004": {
+  "lines": 1070,
+  "speeches": 191,
+  "en": "eng2",
+  "matched": 373,
+  "unmatched": 0,
+  "blocks": 373
+ },
+ "tlg0085.tlg005": {
+  "lines": 1646,
+  "speeches": 236,
+  "en": "eng3",
+  "matched": 516,
+  "unmatched": 2,
+  "blocks": 518
+ },
+ "tlg0085.tlg006": {
+  "lines": 1075,
+  "speeches": 227,
+  "en": "eng2",
+  "matched": 393,
+  "unmatched": 2,
+  "blocks": 395
+ },
+ "tlg0085.tlg007": {
+  "lines": 1041,
+  "speeches": 188,
+  "en": "eng2",
+  "matched": 361,
+  "unmatched": 2,
+  "blocks": 363
+ }
+}

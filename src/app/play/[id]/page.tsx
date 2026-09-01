@@ -49,6 +49,10 @@ export default async function PlayPage({ params }: { params: Promise<{ id: strin
           {" / "}
           {d.chi.A_strict}(厳)
         </dd>
+        <dt>本文</dt>
+        <dd>
+          <Link href={`/play/${d.id}/read/`}>原文を行番号のまま読む →</Link>
+        </dd>
       </dl>
 
       <h2>骨格帯</h2>
