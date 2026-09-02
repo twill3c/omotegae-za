@@ -31,13 +31,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_reader as BR  # noqa: E402
 import speakers as S  # noqa: E402
 
-# ギリシア数詞(基数・序数の語幹)。原文にあれば訳文にも数が要る。
-NUMERAL_STEMS = [
-    ("μυρι", "万"), ("χιλι", "千"), ("διακοσ", "二百"), ("τριακοσ", "三百"),
-    ("ἑκατόν", "百"), ("ἑκατὸν", "百"), ("δέκα", "十"), ("δώδεκα", "十二"),
-    ("τρεῖς", "三"), ("τρία", "三"), ("τρι", "三"), ("δύο", "二"), ("δυο", "二"),
-    ("ἑπτά", "七"), ("ἑπτὰ", "七"), ("πέντε", "五"), ("τέτταρ", "四"), ("τέσσαρ", "四"),
-]
+def load_numerals() -> tuple[list[tuple[str, str]], set[str]]:
+    """数詞の見出しと例外を data/translation/numerals.json から読む。
+
+    見出しは語頭一致で当てるが、それだけでは粗い(τρίχα 毛髪が「三」に当たる)。
+    例外はアクセントを外した完全形で持ち、**実測で育てる**。
+    """
+    data = json.loads((TR / "numerals.json").read_text(encoding="utf-8"))
+    stems = [(a, b) for a, b in data["stems"]]
+    exc = {e["word"] for e in data["exceptions"]}
+    return stems, exc
+
 
 KANA_NUM = "〇一二三四五六七八九十百千万零壱弐参"
 
@@ -107,6 +111,7 @@ def antilabe_parts(play: str) -> dict[str, str]:
 
 
 def check(play: str, surface: dict[str, dict]) -> tuple[dict, list[str]]:
+    num_stems, num_exc = load_numerals()
     problems: list[str] = []
     tpath = TR / f"{play}.json"
     if not tpath.exists():
@@ -156,8 +161,11 @@ def check(play: str, surface: dict[str, dict]) -> tuple[dict, list[str]]:
                 )
         # 数詞は**語頭一致**で見る。語中一致にすると στρατιᾶς(軍勢)が
         # 「τρι(三)」に当たるような誤検出が出る(L8 で実際に踏んだ)。
-        words = [strip_accents(w).lower() for w in re.findall(r"[Ͱ-Ͽἀ-῿]+", grc)]
-        for stem, _kanji in NUMERAL_STEMS:
+        words = [
+            w for w in (strip_accents(x).lower() for x in re.findall(r"[Ͱ-Ͽἀ-῿]+", grc))
+            if w not in num_exc
+        ]
+        for stem, _kanji in num_stems:
             st = strip_accents(stem).lower()
             if any(w.startswith(st) for w in words) and not any(c in ja for c in KANA_NUM):
                 problems.append(f"T-05 {play} {n}: 原文に数詞({stem})があるが訳文に数が無い —— {ja[:28]}")

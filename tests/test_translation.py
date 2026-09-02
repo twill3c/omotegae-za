@@ -8,6 +8,7 @@ HC-070 に従い、対照の本体に「壊した箇所が実際に効く入力�
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -173,6 +174,59 @@ def test_T04_homograph_を立てれば衝突は許される(tmp_path, monkeypatc
     monkeypatch.setattr(CT, "TR", work)
     _s, problems = CT.load_names()
     assert not problems, problems
+
+
+@pytest.mark.validation
+def test_数詞の例外は実際に見出しに当たる語である():
+    """**死んだ例外を作らない。**
+
+    例外表の語は (1) 45 篇の原文に実在し、(2) 見出しのどれかに語頭一致して
+    はじめて意味を持つ。当たらない語を例外に入れても検出は変わらないので、
+    それは確かめずに書いた例外である(HC-120 の「表が実データから外れる」型)。
+    """
+    import xml.etree.ElementTree as ET
+
+    NS = {"t": "http://www.tei-c.org/ns/1.0"}
+    stems, exc = CT.load_numerals()
+    assert exc, "例外表が空 —— 検査が空回りしている"
+
+    seen: set[str] = set()
+    for p in sorted((ROOT / "data" / "raw").glob("*.perseus-grc2.xml")):
+        for e in ET.parse(p).getroot().findall(".//t:l", NS):
+            for w in re.findall(r"[Ͱ-Ͽἀ-῿]+", "".join(e.itertext())):
+                seen.add(CT.strip_accents(w).lower())
+
+    dead = sorted(w for w in exc if w not in seen)
+    assert not dead, f"原文に現れない例外: {dead}"
+
+    useless = sorted(
+        w
+        for w in exc
+        if not any(w.startswith(CT.strip_accents(s).lower()) for s, _k in stems)
+    )
+    assert not useless, f"どの見出しにも当たらない例外: {useless}"
+
+
+@pytest.mark.validation
+def test_数詞の例外に理由が書いてある():
+    data = json.loads((ROOT / "data" / "translation" / "numerals.json").read_text(encoding="utf-8"))
+    for e in data["exceptions"]:
+        assert e["reason"].strip(), e
+
+
+@pytest.mark.validation
+def test_台帳から外した表層形は台帳に載っていない(surface):
+    """同一表層形が別物を指す語は、台帳に入れてはならない(excluded に理由付きで残す)。
+
+    L10 実測: `Μάρδων` は 51 行が人名マルドン、993 行が民族名の属格複数。
+    台帳に入れると T-05 が片方に誤訳を強制する。
+    """
+    data = json.loads((ROOT / "data" / "translation" / "names.json").read_text(encoding="utf-8"))
+    excluded = data.get("excluded", [])
+    assert excluded, "excluded が空 —— この検査が空回りしている"
+    for e in excluded:
+        assert e["reason"].strip(), e
+        assert e["grc"] not in surface, f"{e['grc']} は excluded なのに台帳にある"
 
 
 @pytest.mark.validation
