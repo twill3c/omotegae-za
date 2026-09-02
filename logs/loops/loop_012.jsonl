@@ -1,0 +1,2 @@
+{"v": "1.2", "ts": "2026-09-02T23:34:39+09:00", "project": "omotegae-za", "loop_id": "loop_012", "event": "loop_start", "data": {"goal": "L12: 『嘆願する女たち』298 行以降。固有名を含む行から先に組む手順に改める(T-05 の隣行流出が三度続いたため)", "spec_refs": ["F-12", "T-01", "T-02", "T-03", "T-04", "T-05", "G-11"], "scaffold_version": "1.24.0", "agent": "claude-code"}}
+{"v": "1.2", "ts": "2026-09-02T23:42:48+09:00", "project": "omotegae-za", "loop_id": "loop_012", "event": "test_run", "data": {"command": "python -m pytest -q", "passed": 73, "failed": 0}}
