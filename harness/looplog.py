@@ -476,6 +476,23 @@ def cmd_append(args) -> int:
                 "(存在しない・correction・訂正済みのいずれか)(LL-08)"
             )
             return 1
+        # **loop_start は訂正で無効化できない**(HC-150)。
+        #
+        # 無効化すると有効レコード列の先頭が correction になり、LL-01
+        # (先頭は loop_start)に永久に違反する —— correction は correction を
+        # 指せないので、あとから追記だけで直す道が無い。
+        # append は通るのに validate だけが落ちる、最悪の形で気づくことになる。
+        #
+        # 追記専用の記録では、**壊せる操作を受理してから壊れを報告する設計は
+        # 取り返しがつかない**。だから生成側で拒む。
+        target_rec = next(r for ln, r in effective if ln == target)
+        if target_rec.get("event") == "loop_start":
+            print(
+                "記録拒否 — loop_start は correction で無効化できません(LL-01 と衝突)。\n"
+                "  目標の書き間違いは**その旨を stage_end の notes に書いて先へ進む**か、\n"
+                "  作業が始まっていなければ別のループ ID で立て直してください。"
+            )
+            return 1
     elif any(r.get("event") == "loop_end" for _, r in effective):
         # correction が無効化したレコードの差し替えだけは通す(LL-09 修復スロット / HC-017)
         if not repair_slot_open(existing, args.event):

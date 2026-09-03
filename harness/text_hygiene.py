@@ -52,6 +52,20 @@ SKIP_DIRS = {
     "coverage", ".pytest_cache", "renv", "tests", "test", "docs", "__tests__",
 }
 
+# **除外の範囲は検査の種類ごとに分ける**(HC-121 の主旨)。
+#
+# 上の SKIP_DIRS は「字種の偽陽性」を避けるための除外である ——
+# docs は故障の実例を本文に書くし、data は外部データの原文を持つ。
+# しかし**孤立した復帰文字に正当な用例は無い**。どこに出ても壊れている。
+# だから CR の検査だけは、生成物と外部依存を除いた**全部**を見る。
+#
+# 2026-09-03: docs/ に書いた「CR 混入の顛末」の文そのものに CR が入り、
+# docs が除外されているため検査が違反 0 件を返した(HC-121 の実例が三つ目)。
+GENERATED_ONLY = {
+    ".git", "node_modules", ".next", "out", "dist", "build", "target",
+    ".venv", "venv", "__pycache__", ".vercel", "coverage", ".pytest_cache", "renv",
+}
+
 CYRILLIC = re.compile(r"[Ѐ-ӿԀ-ԯ]")  # text-hygiene:allow
 HANGUL = re.compile(r"[가-힯ᄀ-ᇿ㄰-㆏]")  # text-hygiene:allow
 ALLOWED_CONTROL = {9, 10, 13}  # タブ・改行・復帰
@@ -60,6 +74,22 @@ ALLOW_MARKER = "text-hygiene:allow"
 
 def has_control(text: str) -> bool:
     return any((ord(c) < 32 or ord(c) == 127) and ord(c) not in ALLOWED_CONTROL for c in text)
+
+
+def stray_cr(raw: bytes) -> list[int]:
+    """LF を伴わない CR の位置を返す。
+
+    **行に分けてから探しても見つからない。** Python の万国改行は孤立した CR も
+    改行として扱うので、`scan_line` に渡る時点で CR は消えている。
+    しかも CRLF のファイルでは CR 自体は正常なので、
+    符号位置の集合(`ALLOWED_CONTROL`)で弾くこともできない。
+    だから**バイト列で、LF が続かない CR だけ**を探す。
+
+    2026-09-03 実測: README.md に `app\\read\\men` と書こうとして
+    `\\r` が実際の CR になり、`app<CR>ead\\men` という行ができた。
+    表示上は「appead」に見え、字種検査は違反 0 件を返した。
+    """
+    return [i for i, b in enumerate(raw) if b == 13 and raw[i + 1 : i + 2] != b"\n"]
 
 
 def scan_line(line: str) -> list[str]:
@@ -92,6 +122,19 @@ def self_test() -> list[str]:
     for text, want in positives:
         if want not in scan_line(text):
             errs.append(f"陽性対照が捕まらない: {want}")
+
+    # 孤立した CR。**行に分けてから探しても見つからない**ので、バイト列で対照を置く
+    cr = bytes([13])
+    if not stray_cr(b"app" + cr + b"ead/men"):
+        errs.append("陽性対照が捕まらない: 孤立した復帰文字")
+    lf = bytes([10])
+    if stray_cr(b"crlf line" + cr + lf + b"next"):
+        errs.append("陰性対照を誤検出: CRLF は正常")
+    if stray_cr(b"lf only" + lf + b"next"):
+        errs.append("陰性対照を誤検出: LF だけの行")
+    # 末尾の CR は次のバイトが無い = 孤立と見なす(実際に壊れているため)
+    if not stray_cr(b"tail" + cr):
+        errs.append("陽性対照が捕まらない: 末尾の孤立した復帰文字")
     negatives = [
         "ふつうの日本語と ASCII と 記号 —— 全角括弧()",
         "タブ\tと改行の手前まで",
@@ -117,12 +160,13 @@ def load_ignores(root: Path) -> list[str]:
     return [l.strip() for l in f.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")]
 
 
-def walk(root: Path, ignores: list[str]):
+def walk(root: Path, ignores: list[str], skip: set[str] = None):
+    skip = SKIP_DIRS if skip is None else skip
     for p in sorted(root.rglob("*")):
         if not p.is_file() or p.suffix.lower() not in TEXT_SUFFIXES:
             continue
         rel = p.relative_to(root).as_posix()
-        if any(part in SKIP_DIRS for part in p.relative_to(root).parts[:-1]):
+        if any(part in skip for part in p.relative_to(root).parts[:-1]):
             continue
         if any(pat in rel for pat in ignores):
             continue
@@ -137,7 +181,7 @@ def main(argv: list[str]) -> int:
             print(f"  - {e}", file=sys.stderr)
         return 2
     if "--self-test" in argv:
-        print("自己対照 OK(陽性 4 / 陰性 4 / allow 印 2)")
+        print("自己対照 OK(陽性 6 / 陰性 6 / allow 印 2)")
         return 0
 
     root = Path.cwd()
@@ -159,7 +203,23 @@ def main(argv: list[str]) -> int:
                 hits += 1
                 print(f"{f}:{i}: {', '.join(bad)} — {line.strip()[:80]}")
 
-    print(f"走査 {scanned} ファイル / 違反 {hits} 件")
+    # 孤立した復帰文字は**除外を広く取らずに**見る(上の注記のとおり)。
+    # 行に分ける前のバイト列で探す —— 万国改行が孤立 CR を飲んでしまうため
+    cr_files = targets if targets else list(walk(root, ignores, GENERATED_ONLY))
+    cr_scanned = 0
+    for f in cr_files:
+        try:
+            raw = f.read_bytes()
+        except OSError:
+            continue
+        cr_scanned += 1
+        for pos in stray_cr(raw):
+            hits += 1
+            around = raw[max(0, pos - 20) : pos + 20].decode("utf-8", "replace")
+            print(f"{f}: 孤立した復帰文字(位置 {pos}) — {around!r}")
+
+    print(f"走査 {scanned} ファイル(字種)/ {cr_scanned} ファイル(復帰文字)"
+          f"/ 違反 {hits} 件")
     return 1 if hits else 0
 
 

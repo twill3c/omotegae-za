@@ -1,5 +1,5 @@
 {
-  "scaffold_version": "1.25.0",
+  "scaffold_version": "1.26.0",
   "registry_hint": "harness-kit/scaffold-kit/registry",
   "components": [
     {
@@ -23,8 +23,8 @@
       "id": "looplog",
       "target": "harness/looplog.py",
       "source": "files/harness/looplog.py",
-      "installed_version": "1.24.0",
-      "installed_sha256": "851431f144f77989d5c952dc7aba5fb958dac1433277cbce248aaf62cb74d568"
+      "installed_version": "1.26.0",
+      "installed_sha256": "bc324643ec701004656989706be4af03790bc7d00fe5f317724d942a706e8fc8"
     },
     {
       "type": "file",
@@ -39,8 +39,8 @@
       "id": "text_hygiene",
       "target": "harness/text_hygiene.py",
       "source": "files/harness/text_hygiene.py",
-      "installed_version": "1.24.0",
-      "installed_sha256": "43fa9d7157a84ca37108acf4d85e11a39c7f1239c218e18cd790a9ceffab9d9e"
+      "installed_version": "1.26.0",
+      "installed_sha256": "132c5a28c51bae8ab56cc1babe86cca7fc6d741f54ba6ea75ce8b332d6a0d4d0"
     },
     {
       "type": "file",
