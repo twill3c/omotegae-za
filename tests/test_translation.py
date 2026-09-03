@@ -367,9 +367,12 @@ def test_数詞の例外は語族ごとに埋まっている():
     誤発火した語を一件ずつ足していると、同じ語族の別の語形が残る ——
     L19 で τρίχ-(毛)、L21 で τρίβ-(擦る)が二度それで露呈した。
 
-    そこで「例外と 5 文字前方一致するのに、例外でも confirmed でもない語」が
-    45 篇に無いことを要求する。`confirmed` は「語族が近いが**数詞である**」ことを
+    そこで「例外のある語族に属するのに、例外でも confirmed でもない語」が
+    45 篇に無いことを要求する。`confirmed` は「語族が同じだが**数詞である**」ことを
     明示する側の表で、どちらかに必ず入れれば判定漏れが残らない。
+
+    **語族の切れ目は見出しの次の一文字**(τρι+β = τριβ)。L21 は 5 文字前方一致で
+    切ったが、τρίβειν が τριβω と結ばれず素通りして L23 で誤発火した。
     """
     import xml.etree.ElementTree as ET
 
@@ -388,12 +391,16 @@ def test_数詞の例外は語族ごとに埋まっている():
             for w in re.findall(r"[Ͱ-Ͽἀ-῿]+", "".join(el.itertext())):
                 seen.add(CT.strip_accents(w).lower())
 
+    def family(w: str) -> str | None:
+        """語族の切れ目は**見出しの次の一文字**。τρι+β = τριβ、ἑπτά+τ = επτατ。"""
+        hs = [h for h in heads if w.startswith(h)]
+        if not hs:
+            return None
+        h = max(hs, key=len)
+        return w[: len(h) + 1] if len(w) > len(h) else None
+
+    fams = {family(x) for x in exc} - {None}
     unresolved = sorted(
-        w
-        for w in seen
-        if any(w.startswith(h) for h in heads)
-        and w not in exc
-        and w not in confirmed
-        and any(len(x) >= 5 and len(w) >= 5 and w[:5] == x[:5] for x in exc)
+        w for w in seen if family(w) in fams and w not in exc and w not in confirmed
     )
     assert not unresolved, f"語族が例外に触れているのに判定していない語: {unresolved}"
