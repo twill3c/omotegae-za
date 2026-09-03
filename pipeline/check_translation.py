@@ -67,6 +67,20 @@ def load_names() -> tuple[dict[str, dict], list[str]]:
                 )
             surface[g] = e
         by_kana[e["ja"]].add(e["stem"])
+    # 同じ語幹が二つの見出しに分かれていないか。
+    # カタカナ側の衝突(下)は「一つのカタカナに複数の語幹」しか見ないので、
+    # **同じ語幹に二つのカタカナ**という向きは素通りする。L15 で実際に素通りした ——
+    # 既存の Δωδων(ドドナ)に気づかず Δωδων(ドドネ)を新設し、同じ地が二通りになった。
+    by_stem: dict[str, set[str]] = defaultdict(set)
+    for e in data["entries"]:
+        by_stem[e["stem"]].add(e["ja"])
+    for stem, kanas in by_stem.items():
+        if len(kanas) > 1:
+            problems.append(
+                f"T-04 語幹 {stem} が「{'」「'.join(sorted(kanas))}」の二通りに訳し分けられている —— "
+                "同じ見出しにまとめるか、語幹を分ける"
+            )
+
     for kana, stems in by_kana.items():
         if len(stems) > 1:
             entries = [e for e in data["entries"] if e["ja"] == kana]
@@ -174,7 +188,55 @@ def check(play: str, surface: dict[str, dict]) -> tuple[dict, list[str]]:
     return {"play": play, "translated": len(tr), "total": len(lines)}, problems
 
 
+def demands(play: str, lo: int, hi: int) -> list[tuple[str, list[str]]]:
+    """訳す**前**に、どの行がどのカタカナ・どの数を要求するかを一覧する。
+
+    T-05 は訳し終えてから発火する事後の検査で、実際 L9〜L15 で七度、
+    **同じ形**で落ちた —— 原文では属格が次の行の頭にあるのに、日本語では
+    「ゼウスの◯◯」と一行に続けたくなるので、固有名が隣の行へ流れる。
+    検査は毎回捕まえたが、捕まえるのは書き終えたあとである。
+
+    この関数は同じ台帳を**訳す前**に引く。事後の検査を緩めるのではなく、
+    同じ規範を前に置くだけなので、T-05 の厳しさは変わらない。
+    """
+    surface, _ = load_names()
+    num_stems, num_exc = load_numerals()
+    lines, _sp = greek_lines(play)
+    out: list[tuple[str, list[str]]] = []
+    for n, grc in lines.items():
+        try:
+            k = int(re.sub(r"\D", "", n) or 0)
+        except ValueError:  # pragma: no cover
+            continue
+        if not lo <= k <= hi:
+            continue
+        want: list[str] = []
+        for w in re.findall(r"[Ͱ-Ͽἀ-῿ʼ']+", grc):
+            e = surface.get(w.strip("'ʼ"))
+            if e and e["ja"] not in want:
+                want.append(e["ja"])
+        words = [
+            w for w in (strip_accents(x).lower() for x in re.findall(r"[Ͱ-Ͽἀ-῿]+", grc))
+            if w not in num_exc
+        ]
+        for stem, kanji in num_stems:
+            st = strip_accents(stem).lower()
+            if any(w.startswith(st) for w in words) and kanji not in want:
+                want.append(kanji)
+        if want:
+            out.append((n, want))
+    return out
+
+
 def main() -> int:
+    if len(sys.argv) >= 5 and sys.argv[1] == "demands":
+        play, lo, hi = sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
+        rows = demands(play, lo, hi)
+        for n, want in rows:
+            print(f"  {n:>5}  {' / '.join(want)}")
+        print(f"{lo}〜{hi} 行のうち {len(rows)} 行が固有名・数詞を要求する")
+        return 0
+
     surface, problems = load_names()
     plays = sorted(p.name.split(".perseus-")[0] for p in RAW.glob("*.perseus-grc2.xml"))
     rows = []

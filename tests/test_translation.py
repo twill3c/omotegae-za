@@ -230,6 +230,65 @@ def test_台帳から外した表層形は台帳に載っていない(surface):
 
 
 @pytest.mark.validation
+def test_T04_同じ語幹が二つのカタカナに分かれると落ちる(tmp_path, monkeypatch):
+    """衝突検査の**向き**の対照。
+
+    カタカナ側の検査は「一つのカタカナに複数の語幹」しか見ない。逆向き ——
+    同じ語幹を二つのカタカナに割ってしまう誤り —— は L15 で実際に素通りし、
+    既存の Δωδων(ドドナ)に気づかないまま Δωδων(ドドネ)を新設して、
+    同じ神託所が二通りの表記で出荷される寸前まで行った。
+    """
+    work = tmp_path / "translation"
+    work.mkdir()
+    (work / "names.json").write_text(
+        json.dumps(
+            {
+                "_": [],
+                "entries": [
+                    {"stem": "Δωδων", "ja": "ドドナ", "grc": ["Δωδωναῖα"]},
+                    {"stem": "Δωδων", "ja": "ドドネ", "grc": ["Δωδώνης"]},
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(CT, "TR", work)
+    _s, problems = CT.load_names()
+    assert any("Δωδων" in p and "二通り" in p for p in problems), problems
+
+
+@pytest.mark.validation
+def test_訳す前の一覧は訳したあとの検査と一致する(tr_file, surface):
+    """`demands` は T-05 を**前に置いた**だけで、緩めた版であってはならない。
+
+    L15 で入れた事前一覧は、事後の T-05 と同じ台帳・同じ数詞表を引く。
+    両者がずれていれば、事前に緑でも事後に落ちる(あるいはその逆で、
+    事前一覧が実際には守らせていない)ことになる。
+
+    そこで**一覧が要求した語を実際に訳文から抜き**、T-05 がその行で
+    発火することを確かめる。要求と検出が同じ行・同じ語で対応してはじめて、
+    事前一覧は事後の検査の代わりに読める。
+    """
+    rows = CT.demands(PLAY, 1, 120)
+    assert rows, "ペルシア人 1〜120 行に固有名が一つも無いはずがない"
+    n, want = rows[0]
+    d = _load(tr_file)
+    assert want[0] in d["lines"][n], (n, want, d["lines"][n])
+    d["lines"][n] = "……"
+    _save(tr_file, d)
+    _row, problems = CT.check(PLAY, surface)
+    assert any(p.startswith("T-05") and f" {n}:" in p for p in problems), (n, want, problems)
+
+
+@pytest.mark.validation
+def test_訳す前の一覧は範囲外の行を出さない():
+    rows = CT.demands(PLAY, 40, 60)
+    assert rows
+    assert all(40 <= int(re.sub(r"\D", "", n) or 0) <= 60 for n, _w in rows), rows
+
+
+@pytest.mark.validation
 def test_台帳の見出しは実際の原文に現れる(surface):
     """**死んだ見出しを作らない。** 表に書いた表層形が 45 篇のどこにも無ければ、
     それは確かめずに書いた形である(HC-120 の「表が実データから外れる」型)。
