@@ -358,3 +358,42 @@ def test_除外行の表は生きている():
         )
         lines, _sp = CT.greek_lines(play)
         assert n not in lines, f"{play} {n} が除外されていない"
+
+
+@pytest.mark.validation
+def test_数詞の例外は語族ごとに埋まっている():
+    """**同じ語族の取りこぼしを残さない。**
+
+    誤発火した語を一件ずつ足していると、同じ語族の別の語形が残る ——
+    L19 で τρίχ-(毛)、L21 で τρίβ-(擦る)が二度それで露呈した。
+
+    そこで「例外と 5 文字前方一致するのに、例外でも confirmed でもない語」が
+    45 篇に無いことを要求する。`confirmed` は「語族が近いが**数詞である**」ことを
+    明示する側の表で、どちらかに必ず入れれば判定漏れが残らない。
+    """
+    import xml.etree.ElementTree as ET
+
+    NS = {"t": "http://www.tei-c.org/ns/1.0"}
+    stems, exc = CT.load_numerals()
+    data = json.loads((ROOT / "data" / "translation" / "numerals.json").read_text(encoding="utf-8"))
+    confirmed = {e["word"] for e in data.get("confirmed", [])}
+    assert confirmed, "confirmed が空 —— この検査が空回りしている"
+    for e in data["confirmed"]:
+        assert e["reason"].strip(), e
+
+    heads = [CT.strip_accents(s).lower() for s, _k in stems]
+    seen: set[str] = set()
+    for p in sorted((ROOT / "data" / "raw").glob("*.perseus-grc2.xml")):
+        for el in ET.parse(p).getroot().findall(".//t:l", NS):
+            for w in re.findall(r"[Ͱ-Ͽἀ-῿]+", "".join(el.itertext())):
+                seen.add(CT.strip_accents(w).lower())
+
+    unresolved = sorted(
+        w
+        for w in seen
+        if any(w.startswith(h) for h in heads)
+        and w not in exc
+        and w not in confirmed
+        and any(len(x) >= 5 and len(w) >= 5 and w[:5] == x[:5] for x in exc)
+    )
+    assert not unresolved, f"語族が例外に触れているのに判定していない語: {unresolved}"
