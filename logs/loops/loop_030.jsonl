@@ -1,0 +1,2 @@
+{"v": "1.2", "ts": "2026-09-04T07:47:29+09:00", "project": "omotegae-za", "loop_id": "loop_030", "event": "loop_start", "data": {"goal": "L30: 第一期最後の一篇『エウメニデス』(tlg0085.tlg007・1,041 行)。L17 の順序 —— 篇の大文字語を全数走査 → 出現箇所を見て台帳へ → demands → 行番号を突き合わせて訳す", "spec_refs": ["F-12", "T-01", "T-02", "T-03", "T-04", "T-05", "T-07", "G-11"], "scaffold_version": "1.24.0", "agent": "claude-code"}}
+{"v": "1.2", "ts": "2026-09-04T07:55:10+09:00", "project": "omotegae-za", "loop_id": "loop_030", "event": "test_run", "data": {"command": "python -m pytest -q", "passed": 79, "failed": 0}}
