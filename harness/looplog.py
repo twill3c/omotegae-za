@@ -476,19 +476,26 @@ def cmd_append(args) -> int:
                 "(存在しない・correction・訂正済みのいずれか)(LL-08)"
             )
             return 1
-        # **loop_start は訂正で無効化できない**(HC-150)。
+        # **loop_start を無効化してよいのは、それが唯一の有効レコードのときだけ**(HC-150)。
         #
-        # 無効化すると有効レコード列の先頭が correction になり、LL-01
-        # (先頭は loop_start)に永久に違反する —— correction は correction を
-        # 指せないので、あとから追記だけで直す道が無い。
+        # 無効化して loop_start を追記し直すと、その行はいちばん後ろに来る。
+        # 先に stage_end などが記録されていれば、有効レコード列の先頭は
+        # loop_start でなくなり、LL-01 に**永久に**違反する ——
+        # correction は correction を指せない(LL-08)ので、追記だけで直す道が無い。
         # append は通るのに validate だけが落ちる、最悪の形で気づくことになる。
         #
-        # 追記専用の記録では、**壊せる操作を受理してから壊れを報告する設計は
-        # 取り返しがつかない**。だから生成側で拒む。
+        # 一方、loop_start しか無い段階での訂正は正当な回復経路である
+        # (HC-009: worktree 実行で project 欄が汚れた loop_start を差し替える)。
+        # だから**全面禁止ではなく、直せる場合だけを通す**。
         target_rec = next(r for ln, r in effective if ln == target)
-        if target_rec.get("event") == "loop_start":
+        if target_rec.get("event") == "loop_start" and len(effective) > 1:
+            others = [r.get("event") for ln, r in effective if ln != target]
             print(
-                "記録拒否 — loop_start は correction で無効化できません(LL-01 と衝突)。\n"
+                "記録拒否 — loop_start は、他の記録が既にある段階では無効化できません"
+                "(LL-01 と衝突)。\n"
+                f"  既にある有効レコード: {', '.join(others)}\n"
+                "  無効化して追記し直すと loop_start が先頭でなくなり、"
+                "追記だけでは直せなくなります。\n"
                 "  目標の書き間違いは**その旨を stage_end の notes に書いて先へ進む**か、\n"
                 "  作業が始まっていなければ別のループ ID で立て直してください。"
             )

@@ -24,7 +24,7 @@
       "target": "harness/looplog.py",
       "source": "files/harness/looplog.py",
       "installed_version": "1.26.0",
-      "installed_sha256": "bc324643ec701004656989706be4af03790bc7d00fe5f317724d942a706e8fc8"
+      "installed_sha256": "de9d782625f6551e6a91a4e16788b3189d3d4577c973782be2dfee55dda91b96"
     },
     {
       "type": "file",
