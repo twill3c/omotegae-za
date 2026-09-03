@@ -91,6 +91,31 @@ def test_T02_発話を半端に切ると落ちる(tr_file, surface):
 
 
 @pytest.mark.validation
+def test_T07_発話をまるごと飛ばすと落ちる(tr_file, surface):
+    """T-02 の**盲点**の対照。
+
+    T-02 は「一つの発話を半端に切らない」ことしか見ないので、発話を
+    **まるごと**飛ばした穴は「手を付けていない」扱いで素通りする。
+    L19 で実際に素通りした —— 『七将』181〜202(エテオクレスの 22 行)を
+    丸ごと飛ばしたまま二ループ進み、気づいたのは充填率が 98.0% で
+    止まったことだけだった。
+
+    そこで**発話を一つ丸ごと抜き**、T-02 は黙り、T-07 が発火することを確かめる。
+    両方を主張しないと「T-07 が T-02 の言い換えでない」ことが示せない。
+    """
+    _lines, speeches = CT.greek_lines(PLAY)
+    # 前後を訳したままにできる、真ん中あたりの発話を選ぶ
+    target = next(s for s in speeches[2:] if len(s["lines"]) >= 3)
+    d = _load(tr_file)
+    for n in target["lines"]:
+        del d["lines"][n]
+    _save(tr_file, d)
+    _row, problems = CT.check(PLAY, surface)
+    assert not [p for p in problems if p.startswith("T-02")], problems
+    assert any(p.startswith("T-07") and target["lines"][0] in p for p in problems), problems
+
+
+@pytest.mark.validation
 def test_T05_固有名を落とすと発火する(tr_file, surface):
     """5 行には Ξέρξης があり、台帳は「クセルクセス」を要求する。
 

@@ -1,4 +1,4 @@
-"""L8 和訳の検査 —— T-01〜T-05(SPEC §5.2)。
+"""L8 和訳の検査 —— T-01〜T-07(SPEC §5.2)。
 
 **訳の巧拙は測らない。** 測るのは、訳文が原文の構造に従っているかと、
 原文にあるものが落ちていないかだけである。どれも意味の判定を経由しない。
@@ -10,6 +10,9 @@
                   なる衝突は原語併記を要求する([[umi-no-ki]] の λ/ρ の教訓)
   T-05 消化率     原文にある固有名・数詞が訳文から落ちていない
                   ([[uta-gaeshi]] G-14/G-15: 訳文側を見る検査では捕まらない)
+  T-07 訳出範囲の穴 訳した範囲の内側に未訳行を残していない。T-02 は発話を
+                  **半端に切った**場合しか見ないので、発話ごとまるごと
+                  飛ばした穴を素通りする(L19 で実際に素通りした)
 """
 
 from __future__ import annotations
@@ -151,6 +154,22 @@ def check(play: str, surface: dict[str, dict]) -> tuple[dict, list[str]]:
                 f"T-02 {play}: 発話({sp['who']} {sp['lines'][0]}〜)が半端。未訳 {miss[:6]}"
             )
 
+    # --- T-07 訳出範囲の穴 --------------------------------------------------
+    # T-02 は「一つの発話を半端に切らない」ことしか見ないので、**発話ごと
+    # まるごと飛ばした穴は素通りする**。L19 で実際に素通りした —— 『七将』
+    # 181〜202(エテオクレスの 22 行)を丸ごと飛ばしたまま二ループ進み、
+    # 気づいたのは充填率が 98.0% で止まったことだけだった。
+    # 訳出済みの最初の行と最後の行のあいだに未訳行があれば、それは穴である。
+    order = list(lines)
+    idx = [i for i, n in enumerate(order) if n in tr]
+    if idx:
+        holes = [order[i] for i in range(idx[0], idx[-1] + 1) if order[i] not in tr]
+        if holes:
+            problems.append(
+                f"T-07 {play}: 訳出範囲({order[idx[0]]}〜{order[idx[-1]]})の内側に未訳の穴が "
+                f"{len(holes)} 行 {holes[:8]}"
+            )
+
     # --- T-03 antilabe -----------------------------------------------------
     for n, part in parts.items():
         if n not in tr:
@@ -259,7 +278,7 @@ def main() -> int:
         if len(problems) > 30:
             print(f"  … 他 {len(problems) - 30} 件")
         return 1
-    print("\nT-01〜T-05 問題 0 件")
+    print("\nT-01〜T-07 問題 0 件")
     return 0
 
 
