@@ -1,0 +1,2 @@
+{"v": "1.2", "ts": "2026-09-03T16:58:58+09:00", "project": "omotegae-za", "loop_id": "loop_017", "event": "loop_start", "data": {"goal": "L17: 第一期四篇目『テーバイ攻めの七将』(tlg0085.tlg004・1,072 行)。demands を引いたうえで、固有名を置く行番号を訳文に書き込む前に一つずつ照合する(L16 で一覧を出しても二度ずらしたため)", "spec_refs": ["F-12", "T-01", "T-02", "T-03", "T-04", "T-05", "G-11"], "scaffold_version": "1.24.0", "agent": "claude-code"}}
+{"v": "1.2", "ts": "2026-09-03T17:08:34+09:00", "project": "omotegae-za", "loop_id": "loop_017", "event": "test_run", "data": {"command": "python -m pytest -q", "passed": 76, "failed": 0}}
