@@ -330,3 +330,31 @@ def test_台帳の見出しは実際の原文に現れる(surface):
                 seen.add(w.strip("'ʼ"))
     dead = sorted(set(surface) - seen)
     assert not dead, f"原文に現れない見出し: {dead}"
+
+
+@pytest.mark.validation
+def test_除外行の表は生きている():
+    """`skip_lines` は「空ではないが本文でもない <l>」の列挙。
+
+    死んだ列挙を作らない —— 表に書いた行が (1) 原本に実在し、(2) 本文が空でなく
+    (空なら既存の処理で落ちるので列挙は無意味)、(3) 実際に訳出対象から
+    外れていること、を確かめる。理由が書かれていることも要求する。
+
+    L20 実測: 45 篇の `n="0"` は 30 篇すべて本文が空で自然に落ちるが、
+    『アガメムノン』の一件だけ語(話者名 Φύλαξ)が入っていて訳出対象に混じっていた。
+    """
+    import xml.etree.ElementTree as ET
+
+    NS = {"t": "http://www.tei-c.org/ns/1.0"}
+    skip = CT.BR.skipped_lines()
+    assert skip, "skip_lines が空 —— この検査が空回りしている"
+    for (play, n), reason in skip.items():
+        assert reason.strip(), (play, n)
+        root = ET.parse(ROOT / "data" / "raw" / f"{play}.perseus-grc2.xml").getroot()
+        hit = [e for e in root.findall(".//t:l", NS) if e.get("n") == n]
+        assert hit, f"原本に無い行を除外している: {play} {n}"
+        assert CT.BR.grc_text(hit[0]).strip(), (
+            f"{play} {n} は本文が空 —— 既存の空行処理で落ちるので列挙は不要"
+        )
+        lines, _sp = CT.greek_lines(play)
+        assert n not in lines, f"{play} {n} が除外されていない"

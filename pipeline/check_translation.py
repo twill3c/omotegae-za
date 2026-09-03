@@ -102,13 +102,14 @@ def greek_lines(play: str) -> tuple[dict[str, str], list[dict]]:
     lines: dict[str, str] = {}
     speeches: list[dict] = []
     prev = None
+    skip = BR.skipped_lines()
     for sp in root.findall(".//t:sp", NS):
         lab = S.label_of(sp) or prev
         prev = lab
         ns: list[str] = []
         for e in sp.findall(".//t:l", NS):
             t = BR.grc_text(e)
-            if not t:
+            if not t or (play, e.get("n")) in skip:
                 continue
             n = e.get("n")
             lines[n] = t

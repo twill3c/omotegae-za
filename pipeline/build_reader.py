@@ -86,6 +86,18 @@ def grc_text(el) -> str:
     return text_of(el, skip=GRC_SKIP)[0]
 
 
+def skipped_lines() -> dict[tuple[str, str], str]:
+    """本文でない `<l>` を (篇, 行番号) → 理由 で返す。
+
+    **data/raw は原本のまま据え置く**(SPEC N-04)ので、除外はここでのみ行う。
+    表は data/corrections.json の `skip_lines` にあり、一件ずつ人が理由を書く。
+    「空でないが本文でもない行」を機械で判定する規則は書かない ——
+    それは本文の中身を推量することになるので、**列挙で持つ**。
+    """
+    data = json.loads((ROOT / "data" / "corrections.json").read_text(encoding="utf-8"))
+    return {(e["play"], e["line"]): e["reason"] for e in data.get("skip_lines", [])}
+
+
 def greek_speeches(path: Path, ledger: dict) -> list[dict]:
     play = path.name.split(".perseus-")[0]
     root = ET.parse(path).getroot()
@@ -105,9 +117,10 @@ def greek_speeches(path: Path, ledger: dict) -> list[dict]:
             lab = rec["merge_into"]
             cls = "actor"
         lines = []
+        skip = skipped_lines()
         for e in sp.findall(".//t:l", NS):
             t = grc_text(e)
-            if t:  # 本文が空の行は落とす(実測 121 件)
+            if t and (play, e.get("n")) not in skip:  # 空行(実測 121 件)と除外表の行を落とす
                 lines.append([e.get("n"), t])
         if not lines:
             continue
@@ -216,12 +229,21 @@ def main() -> int:
             json.dumps(payload, ensure_ascii=False), encoding="utf-8"
         )
 
-        # G-02 と同型の検算: 落とした空行を除き、原文の行が一つも欠けていない
+        # G-02 と同型の検算: 落とした空行と**除外表の行**を除き、原文の行が一つも欠けていない。
+        # 除外分を「引いてよい数」ではなく**列挙の実測数**で引く —— そうしないと、
+        # 除外表と無関係な取りこぼしが起きても差が埋まって見えなくなる。
         root = ET.parse(path).getroot()
+        skip_here = {n for (pl, n) in skipped_lines() if pl == play}
         nonempty = sum(1 for e in root.findall(".//t:l", NS) if grc_text(e))
+        dropped = sum(
+            1 for e in root.findall(".//t:l", NS)
+            if grc_text(e) and e.get("n") in skip_here
+        )
         kept = sum(len(s["lines"]) for s in speeches)
-        if kept != nonempty:
-            raise AssertionError(f"{play}: 本文のある行 {nonempty} に対しリーダーに {kept}")
+        if kept != nonempty - dropped:
+            raise AssertionError(
+                f"{play}: 本文のある行 {nonempty} − 除外 {dropped} に対しリーダーに {kept}"
+            )
 
         report[play] = {
             "lines": kept,

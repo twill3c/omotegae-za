@@ -1,28 +1,40 @@
 {
-  "_": [
-    "Perseus 底本の行番号の破損に対する補正表。人が一件ずつ判断して書く。",
-    "data/raw は原本のまま据え置き(SPEC N-04)、補正はここでのみ行う。",
-    "各件に『何を見てそう決めたか』を書く —— 前後の行番号は追試できる根拠である。",
-    "上流(PerseusDL/canonical-greekLit)への報告対象でもある。"
-  ],
-  "line_numbers": [
-    {
-      "play": "tlg0019.tlg011",
-      "title": "Πλοῦτος(福の神)",
-      "observed": "3933",
-      "corrected": "393e",
-      "evidence": "前後が 393 / 393b / 393c / 393d / [3933] / 393f / 394 と続く。393e の位置に相当し、枝番 e が 3933 に化けている",
-      "found": "2026-09-02 loop_000",
-      "reported_upstream": false
-    },
-    {
-      "play": "tlg0019.tlg011",
-      "title": "Πλοῦτος(福の神)",
-      "observed": "NaN",
-      "corrected": "128",
-      "evidence": "前後が 126 / 127 / 127b / [NaN] / 129 / 129b / 129c と続く。欠けているのは 128 のみ",
-      "found": "2026-09-02 loop_001(テスト test_行番号の枝番は数値部を持つ が検出)",
-      "reported_upstream": false
-    }
-  ]
+ "_": [
+  "Perseus 底本の行番号の破損に対する補正表。人が一件ずつ判断して書く。",
+  "data/raw は原本のまま据え置き(SPEC N-04)、補正はここでのみ行う。",
+  "各件に『何を見てそう決めたか』を書く —— 前後の行番号は追試できる根拠である。",
+  "上流(PerseusDL/canonical-greekLit)への報告対象でもある。",
+  "`skip_lines` は「空ではないが本文でもない <l>」の列挙。機械の規則は書かない —— 一件ずつ理由を添える。"
+ ],
+ "line_numbers": [
+  {
+   "play": "tlg0019.tlg011",
+   "title": "Πλοῦτος(福の神)",
+   "observed": "3933",
+   "corrected": "393e",
+   "evidence": "前後が 393 / 393b / 393c / 393d / [3933] / 393f / 394 と続く。393e の位置に相当し、枝番 e が 3933 に化けている",
+   "found": "2026-09-02 loop_000",
+   "reported_upstream": false
+  },
+  {
+   "play": "tlg0019.tlg011",
+   "title": "Πλοῦτος(福の神)",
+   "observed": "NaN",
+   "corrected": "128",
+   "evidence": "前後が 126 / 127 / 127b / [NaN] / 129 / 129b / 129c と続く。欠けているのは 128 のみ",
+   "found": "2026-09-02 loop_001(テスト test_行番号の枝番は数値部を持つ が検出)",
+   "reported_upstream": false
+  }
+ ],
+ "skip_lines": [
+  {
+   "play": "tlg0085.tlg005",
+   "title": "Ἀγαμέμνων(アガメムノン)",
+   "line": "0",
+   "text": "Φύλαξ",
+   "reason": "本文ではなく話者名。この <sp> の <speaker> が既に Φύλαξ であり、同じ語が <l n=\"0\"> として重複している。45 篇の n=\"0\" は他の 30 篇すべて本文が空で自然に落ちるが、この一件だけ語が入っているため訳出対象に混じっていた。訳出対象は 61,968 → 61,967 行になる",
+   "found": "2026-09-04 loop_020",
+   "reported_upstream": false
+  }
+ ]
 }

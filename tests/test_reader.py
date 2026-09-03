@@ -61,14 +61,29 @@ def report() -> dict:
 
 @pytest.mark.validation
 def test_本文のある行を一つも落とさない(report):
-    """空行(実測 121 件)だけを落とし、それ以外は全部リーダーに載る。"""
+    """空行(実測 121 件)と**除外表の行**だけを落とし、それ以外は全部リーダーに載る。
+
+    除外分は「引いてよい定数」ではなく `skip_lines` の列挙から実測して引く ——
+    定数で引くと、除外表と無関係な取りこぼしが起きても差が埋まって見えなくなる。
+    L20 で `skip_lines` を入れたとき、この検査と build_reader の検算が
+    **どちらも独立に落ちた**。二重に持っていたことが効いた。
+    """
+    import sys
+
+    sys.path.insert(0, str(ROOT / "pipeline"))
+    import build_reader as BR
+
+    skip = BR.skipped_lines()
     for path in sorted((ROOT / "data" / "raw").glob("*.perseus-grc2.xml")):
         play = path.name.split(".perseus-")[0]
         root = ET.parse(path).getroot()
         nonempty = [e for e in root.findall(".//t:l", NS) if _text(e)]
+        dropped = [e for e in nonempty if (play, e.get("n")) in skip]
         data = json.loads((READER / f"{play}.json").read_text(encoding="utf-8"))
         kept = [ln for s in data["speeches"] for ln in s["lines"]]
-        assert len(kept) == len(nonempty), (play, len(kept), len(nonempty))
+        assert len(kept) == len(nonempty) - len(dropped), (
+            play, len(kept), len(nonempty), len(dropped)
+        )
 
 
 @pytest.mark.validation
