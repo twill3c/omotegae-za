@@ -135,12 +135,28 @@ tbody tr:hover { background: var(--rule-soft); }
 .castlist li { padding: .25rem 0; border-bottom: 1px solid var(--rule-soft); font-size: .88rem; }
 .castlist b { font-weight: 600; color: var(--ink-soft); margin-right: .6rem; }
 
-/* ------- フッタ ------- */
-.site-footer { margin-top: 4rem; border-top: 1px solid var(--rule); background: var(--bg-raised); }
-.site-footer__inner { max-width: var(--max); margin: 0 auto; padding: 1.1rem 1.25rem 2rem; font-size: .8rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
-.site-footer a { color: var(--ink-soft); }
-.fsep { color: var(--ink-faint); }
-.site-footer__copy { color: var(--ink-faint); }
+/* fleet: fixed footer —— フリート共通規約(koho-lens が正本)。
+   5 項目・この並び・下部固定。区切りの「・」は文字として置く。
+   © はリンク文言の外に、MIT License より後・GitHub より前に置く。
+   固定するぶん、body に逃げを作らないと本文の末尾が隠れる。 */
+nav.fleet {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+  background: var(--bg-raised); border-top: 1px solid var(--rule);
+  padding: .45rem 1.25rem .5rem; text-align: center;
+  font-size: .78rem; line-height: 1.7; color: var(--ink-soft);
+}
+nav.fleet p { margin: 0; }
+nav.fleet a { color: var(--accent); text-decoration: none; }
+nav.fleet a:hover, nav.fleet a:focus-visible { text-decoration: underline; }
+nav.fleet .fsep { color: var(--ink-faint); padding: 0 .3rem; user-select: none; }
+nav.fleet .fleet__copy { color: var(--ink-soft); }
+nav.fleet .fleet__note { font-size: .72rem; color: var(--ink-faint); margin-top: .1rem; }
+nav.fleet .fleet__note a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); }
+
+/* 逃げ。狭い幅では折り返して高くなるので、そのぶん厚く取る。 */
+body { padding-bottom: 4.4rem; }
+@media (max-width: 46rem) { body { padding-bottom: 6.4rem; } }
+@media (max-width: 30rem) { body { padding-bottom: 8.6rem; } }
 
 @media (max-width: 640px) {
   .bandrow { grid-template-columns: 8.5rem 1fr 2.2rem; gap: .5rem; }
