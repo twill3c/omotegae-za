@@ -404,3 +404,29 @@ def test_数詞の例外は語族ごとに埋まっている():
         w for w in seen if family(w) in fams and w not in exc and w not in confirmed
     )
     assert not unresolved, f"語族が例外に触れているのに判定していない語: {unresolved}"
+
+
+@pytest.mark.validation
+def test_ギリシア文字を含まない行はすべて除外表に載っている():
+    """**本文でない <l> の取りこぼしを残さない。**
+
+    ギリシア文字を一つも含まない `<l>` は、本文ではなく校訂者の記号である
+    (欠落を示すダッシュ、失われた行の韻律記号)。L32 実測で 45 篇に 2 件あり、
+    どちらも `skip_lines` に列挙した。
+
+    ここで「ギリシア文字が無ければ落とす」という機械の規則は**書かない** ——
+    列挙を保ったまま、**新しい件が出たら検査が落ちて人が判定する**ようにする。
+    数詞の語族と同じ構えである。
+    """
+    import xml.etree.ElementTree as ET
+
+    NS = {"t": "http://www.tei-c.org/ns/1.0"}
+    skip = CT.BR.skipped_lines()
+    unlisted = []
+    for p in sorted((ROOT / "data" / "raw").glob("*.perseus-grc2.xml")):
+        play = p.name.split(".perseus")[0]
+        for e in ET.parse(p).getroot().findall(".//t:l", NS):
+            t = CT.BR.grc_text(e)
+            if t and not re.search(r"[Ͱ-Ͽἀ-῿]", t) and (play, e.get("n")) not in skip:
+                unlisted.append((play, e.get("n"), t))
+    assert not unlisted, f"ギリシア文字を含まないのに除外表に無い <l>: {unlisted}"
