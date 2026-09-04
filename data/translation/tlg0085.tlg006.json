@@ -1,4 +1,10 @@
 {
+ "play": "tlg0085.tlg006",
+ "title": "供養する女たち",
+ "translator": "Claude(機械生成)",
+ "license": "CC BY-SA 4.0",
+ "base": "Herbert Weir Smyth 校訂 Aeschylus (1922) の Perseus 版ギリシア語本文",
+ "note": "行番号は底本のまま。原文一行に訳文一行を当てる。訳の巧拙は主張しない。",
  "lines": {
   "1": "地の底のヘルメスよ、父の権を見守るお方よ、",
   "2": "わたしの救い手、味方となってください。願い求めます。",

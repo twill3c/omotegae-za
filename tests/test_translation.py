@@ -461,3 +461,26 @@ def test_トップページの充填率は検査器の実測と一致する():
     assert (ja_r, grc_r) == (ja_c, grc_c), (
         f"reader_report は {ja_r}/{grc_r}、check_translation は {ja_c}/{grc_c}"
     )
+
+
+def test_訳文ファイルは帰属欄を必ず持つ():
+    """訳文は CC BY-SA 4.0 で継承がある。**空欄で出荷してはならない。**
+
+    `build_reader.py` は translator/license/base を `t.get(k, "")` で拾うので、
+    欄が無い訳文ファイルは**黙って空文字**になり、画面には
+    「和訳: ・。に基づく。」とだけ出る。L34 実測で **7 篇中 4 篇がこの状態**だった ——
+    完訳したのに帰属だけが消えていて、機械の検査は全部緑のままだった。
+
+    底本の記載(校訂者・刊年)は G-00 の要求でもある。ここで掛ける。
+    """
+    missing = []
+    for f in sorted((ROOT / "data" / "translation").glob("tlg*.json")):
+        d = json.loads(f.read_text("utf-8"))
+        for k in ("play", "title", "translator", "license", "base"):
+            if not d.get(k, "").strip():
+                missing.append(f"{f.stem}:{k}")
+        if d.get("play") != f.stem:
+            missing.append(f"{f.stem}: play 欄が {d.get('play')!r}")
+        if "校訂" not in d.get("base", ""):
+            missing.append(f"{f.stem}: base に校訂者が書かれていない")
+    assert not missing, f"帰属欄の欠落: {missing}"

@@ -1,4 +1,10 @@
 {
+ "play": "tlg0085.tlg007",
+ "title": "エウメニデス",
+ "translator": "Claude(機械生成)",
+ "license": "CC BY-SA 4.0",
+ "base": "Herbert Weir Smyth 校訂 Aeschylus (1922) の Perseus 版ギリシア語本文",
+ "note": "行番号は底本のまま。原文一行に訳文一行を当てる。訳の巧拙は主張しない。",
  "lines": {
   "1": "まず、この祈りのうちで、神々のうち第一の座を捧げます ——",
   "2": "最初の占い師たるガイアに。そして次にテミスに。",
