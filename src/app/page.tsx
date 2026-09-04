@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { AUTHORS, CLAIMED_ACTORS, PLAYS, playsOf, type PlaySummary } from "@/lib/site";
 import { Band } from "@/components/Band";
-import { loadPlay } from "@/lib/load";
+import { loadPlay, loadReaderReport } from "@/lib/load";
 
 export default function Home() {
   const details = Object.fromEntries(PLAYS.map((p) => [p.id, loadPlay(p.id)]));
+  const report = loadReaderReport();
+  const rows = Object.values(report);
+  const jaLines = rows.reduce((a, r) => a + r.ja, 0);
+  const grcLines = rows.reduce((a, r) => a + r.lines, 0);
+  const jaDone = rows.filter((r) => r.ja === r.lines).length;
   const tragedies = PLAYS.filter((p) => p.genre === "悲劇");
   const comedies = PLAYS.filter((p) => p.genre === "喜劇");
   const fits = (ps: PlaySummary[], mode: string) =>
@@ -28,6 +33,20 @@ export default function Home() {
         当初は「悲劇 34 篇のうち 31 篇以上で χ ≤ 3」を事前登録したが、
         <b>この予測は落ちた</b>。落ちた経緯と、それでも出た構造は
         <Link href="/method/" prefetch={false}>方法</Link>に記した。
+      </div>
+
+      <div className="note">
+        <strong>和訳:</strong> 同じ 45 篇 {grcLines.toLocaleString()} 行を、
+        <b>行番号のまま</b>日本語に移している。現在{" "}
+        <b>
+          {jaLines.toLocaleString()} / {grcLines.toLocaleString()} 行(
+          {((jaLines / grcLines) * 100).toFixed(1)}%)・完訳 {jaDone} 篇
+        </b>
+        。篇の頁の「読む」から、原文・和訳・英訳を並べて読める。
+        <br />
+        <b>訳の巧拙は主張しない</b> —— 測っているのは行対応・発話の完全性・
+        割られた行の保存・固有名と数詞の消化だけである。英訳は照合に使わない
+        (原文から訳す)。
       </div>
 
       <h2>骨格帯</h2>

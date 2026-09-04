@@ -430,3 +430,34 @@ def test_ギリシア文字を含まない行はすべて除外表に載って�
             if t and not re.search(r"[Ͱ-Ͽἀ-῿]", t) and (play, e.get("n")) not in skip:
                 unlisted.append((play, e.get("n"), t))
     assert not unlisted, f"ギリシア文字を含まないのに除外表に無い <l>: {unlisted}"
+
+
+def test_トップページの充填率は検査器の実測と一致する():
+    """画面に出す数と、オラクルが数える数とが二経路で一致する。
+
+    トップページは `data/derived/reader_report.json`(`build_reader.py` の集計)を
+    読んで「n / 全 m 行」を出す。`check_translation.py` は
+    `src/data/reader/*.json` と `data/translation/*.json` を突き合わせて同じ量を出す。
+    **入口が違うので、片方だけずれたら落ちる。**
+
+    L33 で SPEC の分母(61,967)が `skip_lines` の追加に追随できておらず
+    二行ずれていたのを見つけた。文書は検査に掛かっていなかったが、
+    **画面に出す数は掛けられる**ので、ここで掛ける。
+    """
+    report = json.loads((ROOT / "data" / "derived" / "reader_report.json").read_text("utf-8"))
+    ja_r = sum(r["ja"] for r in report.values())
+    grc_r = sum(r["lines"] for r in report.values())
+
+    ja_c = grc_c = 0
+    for f in sorted((ROOT / "src" / "data" / "reader").glob("tlg*.json")):
+        play = f.stem
+        lines, _ = CT.greek_lines(play)
+        grc_c += len(lines)
+        tr = json.loads((ROOT / "data" / "translation" / f"{play}.json").read_text("utf-8"))["lines"] \
+            if (ROOT / "data" / "translation" / f"{play}.json").exists() else {}
+        ja_c += sum(1 for n in lines if n in tr)
+
+    assert grc_c > 60_000 and ja_c > 0, f"数えられていない({ja_c}/{grc_c})"
+    assert (ja_r, grc_r) == (ja_c, grc_c), (
+        f"reader_report は {ja_r}/{grc_r}、check_translation は {ja_c}/{grc_c}"
+    )

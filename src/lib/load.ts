@@ -16,3 +16,17 @@ export function loadPlay(id: string): PlayDetail {
   const file = path.join(process.cwd(), "src", "data", "play", `${id}.json`);
   return JSON.parse(readFileSync(file, "utf-8")) as PlayDetail;
 }
+
+export type ReaderRow = { lines: number; ja: number };
+
+/**
+ * 和訳の充填状況。
+ *
+ * リーダーの JSON は 45 篇で 8.75MB あるので、トップページのために全部読まない。
+ * `build_reader.py` が書く集計(篇 → 行数・訳出数)だけを読む。
+ * この数はパイプラインの実測であって、手で書いた数ではない。
+ */
+export function loadReaderReport(): Record<string, ReaderRow> {
+  const file = path.join(process.cwd(), "data", "derived", "reader_report.json");
+  return JSON.parse(readFileSync(file, "utf-8")) as Record<string, ReaderRow>;
+}
